@@ -1,21 +1,25 @@
 import React from "react";
-import "./App.css";
-import NavigationBar from "./layout/navBar";
-import { Container, Row, Col } from "react-bootstrap";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import AppLayout from "./layout/index";
+import Products from "./pages/products";
+import Sells from "./pages/sells";
 
-function App() {
+export default function App() {
   return (
-    <React.Fragment>
-      <NavigationBar />
-      <div className="m-5">
-        <Container fluid className="bg-primary">
-          <Row>
-            <Col>1 of 1</Col>
-          </Row>
-        </Container>
-      </div>
-    </React.Fragment>
+    <Router>
+      <AppLayout>
+        <Switch>
+          <Route path="/products">
+            <Products />
+          </Route>
+          <Route path="/sells">
+            <Sells />
+          </Route>
+          <Route path="/">
+            <h1>Welcome to Tio Sam Importaciones</h1>
+          </Route>
+        </Switch>
+      </AppLayout>
+    </Router>
   );
 }
-
-export default App;
