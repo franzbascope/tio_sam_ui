@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-  Button,
-  NavDropdown,
-} from "react-bootstrap";
+import { Navbar, Nav, Form, Button, NavDropdown } from "react-bootstrap";
 
 const navigationBar = () => {
   return (
-    <Navbar bg="white" className="border-bottom shadow-sm" variant="light">
+    <Navbar bg="white" className="border-bottom shadow-sm " variant="light">
       <Navbar.Brand href="#home">TioSam</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link href="#home">Products</Nav.Link>
