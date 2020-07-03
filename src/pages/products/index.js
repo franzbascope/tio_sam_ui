@@ -1,43 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, Button, Alert } from "react-bootstrap";
-import axios from "axios";
-import { API_URL } from "../../configuration/index";
+import { Breadcrumb, Button, Alert, Spinner } from "react-bootstrap";
+import Messages from "../../shared/messages";
 import Table from "./table";
-
+import mainHandler from "../../shared/requestHandler";
+import mainState from "../../shared/mainState";
+import * as Methods from "../../shared/methods";
+import { productsUrl } from "../../shared/urls";
 export default () => {
   const [inputValues, setValues] = useState({
     products: [],
-    error: null,
-    success: null,
   });
+  const { inputValues: globalValues } = mainState();
+  const requestHandler = mainHandler();
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        let res = await axios.get(`${API_URL}/products`);
-        setValues({ ...inputValues, products: res.data.data });
-      } catch (e) {
-        setValues({ inputValues, error: "Errot fetching products: " + e });
-      }
-    };
-    getProducts();
+  useEffect(async () => {
+    let res = await requestHandler(Methods.GET, productsUrl);
+    setValues({ ...inputValues, products: res.data.data });
   }, []);
 
   const deleteProduct = async (id) => {
-    try {
-      if (window.confirm("Are you sure you want to delete this product?")) {
-        await axios.delete(`${API_URL}/products/${id}`);
-        let products = inputValues.products.filter((product) => {
-          return product._id != id;
-        });
-        setValues({
-          ...inputValues,
-          products,
-          success: "Product deleted successfuly: ",
-        });
-      }
-    } catch (e) {
-      setValues({ inputValues, error: "Error deleting product: " + e });
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      await requestHandler(Methods.DELETE, productsUrl, null, id);
+      let products = inputValues.products.filter((product) => {
+        return product._id != id;
+      });
+      setValues({
+        ...inputValues,
+        products,
+      });
     }
   };
 
@@ -49,36 +39,15 @@ export default () => {
       <Button variant="primary" className="mt-3 mb-3">
         New Product
       </Button>
-      {inputValues.error ? (
-        <Alert
-          onClose={() =>
-            setValues({ ...inputValues, success: null, error: null })
-          }
-          className="mt-3 mb-3"
-          dismissible
-          variant="danger"
-        >
-          {inputValues.error}
-        </Alert>
-      ) : (
-        ""
-      )}
-
-      {inputValues.success ? (
-        <Alert
-          onClose={() =>
-            setValues({ ...inputValues, success: null, error: null })
-          }
-          className="mt-3 mb-3"
-          dismissible
-          variant="success"
-        >
-          {inputValues.success}
-        </Alert>
-      ) : (
-        ""
-      )}
-      {inputValues.products.length > 0 ? (
+      <Messages />
+      {globalValues.loading ? (
+        <React.Fragment>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <br />
+            <Spinner animation="border" variant="primary" />
+          </div>
+        </React.Fragment>
+      ) : inputValues.products.length > 0 ? (
         <Table
           products={inputValues.products}
           deleteProduct={(id) => {
