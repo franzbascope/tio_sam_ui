@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppLayout from "./layout/index";
 import Products from "./pages/products";
 import Sells from "./pages/sells";
+import NewProduct from "./pages/products/new";
 
 export default function App() {
   setGlobal(GlobalState);
@@ -11,8 +12,11 @@ export default function App() {
     <Router>
       <AppLayout>
         <Switch>
-          <Route path="/products">
+          <Route path="/products" exact={true}>
             <Products />
+          </Route>
+          <Route path="/products/new">
+            <NewProduct />
           </Route>
           <Route path="/sells">
             <Sells />

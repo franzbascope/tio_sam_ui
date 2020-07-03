@@ -6,21 +6,28 @@ export default () => {
   const [path, setPath] = useState([]);
   useEffect(() => {
     let url = window.location.pathname;
-    let addressArray = url.split("/");
 
+    let addressArray = url.split("/");
     setPath(addressArray);
   }, []);
 
   return (
     <Breadcrumb>
-      {path.map((path, key) => {
-        return (
-          <li key={key} className="breadcrumb-item">
-            <Link to={path} role="buttons">
-              {path.toUpperCase()}
-            </Link>
-          </li>
-        );
+      {path.map((url, key) => {
+        if (url != "") {
+          let redirectUrl = `/${url}`;
+          if (key > 1) {
+            redirectUrl = `/${path[key - 1]}/${url}`;
+          }
+
+          return (
+            <li key={key} className="breadcrumb-item">
+              <Link to={redirectUrl} role="buttons">
+                {url.toUpperCase()}
+              </Link>
+            </li>
+          );
+        }
       })}
     </Breadcrumb>
   );
