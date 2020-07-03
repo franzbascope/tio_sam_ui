@@ -21,7 +21,6 @@ export default () => {
     if (form.checkValidity() === false) {
       event.stopPropagation();
       setValidated(true);
-      debugger;
     } else {
       let request = parseFormToObject(event);
       saveProduct(request);
@@ -53,13 +52,24 @@ export default () => {
                   <Form.Control name="name" required type="text" />
                 </Form.Group>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
-                  <Form.Label>Cost</Form.Label>
-                  <Form.Control name="cost" required type="number" />
+                  <Form.Label>Cost $</Form.Label>
+                  <Form.Control
+                    name="cost"
+                    required
+                    type="number"
+                    step="0.01"
+                    min="0"
+                  />
                 </Form.Group>
-
                 <Form.Group md="4" as={Col} controlId="formGridPassword">
-                  <Form.Label>Weight</Form.Label>
+                  <Form.Label>Weight Gr</Form.Label>
                   <Form.Control name="weight" required type="number" />
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Price Bs</Form.Label>
+                  <Form.Control name="price" required type="text" />
                 </Form.Group>
               </Form.Row>
               <Button variant="primary" type="submit">

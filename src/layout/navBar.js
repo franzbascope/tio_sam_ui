@@ -1,12 +1,13 @@
 import React from "react";
 import { Navbar, Nav, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import logo from "../assets/tioSamLogo.png";
 
 const navigationBar = () => {
   return (
     <Navbar bg="white" className="border-bottom shadow-sm " variant="light">
       <Link className="navbar-brand" to="/">
-        TioSam
+        Tio Sam
       </Link>
       <Nav className="mr-auto">
         <Link to="/products" className="nav-link">
