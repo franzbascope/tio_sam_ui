@@ -1,15 +1,12 @@
 import React, { setGlobal } from "reactn";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { GlobalState } from "./defaultState";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppLayout from "./layout/index";
 import Products from "./pages/products";
 import Sells from "./pages/sells";
 
 export default function App() {
-  setGlobal({
-    success: "",
-    error: false,
-    loading: true,
-  });
+  setGlobal(GlobalState);
   return (
     <Router>
       <AppLayout>

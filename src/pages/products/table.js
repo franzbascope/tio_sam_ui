@@ -15,10 +15,10 @@ export default ({ products, deleteProduct }) => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product, key) => {
+          {products.map((product) => {
             const { price, weight, cost, name, _id } = product;
             return (
-              <tr key>
+              <tr key={_id}>
                 <td>{name}</td>
                 <td>{price}</td>
                 <td>{weight}</td>

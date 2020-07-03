@@ -4,7 +4,7 @@ import { mainUrl as API_URL } from "./urls";
 
 export default () => {
   const [globalValues, setGlobalValues] = useGlobal();
-  const requestHandler = async (method, url, data, id = null) => {
+  const requestHandler = async (method, url, data, id = null, message = "") => {
     let res = null;
     setGlobalValues({ ...globalValues, loading: true });
     try {
@@ -28,7 +28,7 @@ export default () => {
     } catch (err) {
       setGlobalValues({ ...globalValues, error: err });
     }
-    setGlobalValues({ ...globalValues, loading: false });
+    setGlobalValues({ ...globalValues, loading: false, success: message });
     return res;
   };
   return requestHandler;
