@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGlobal } from "reactn";
-import { Button, Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import Messages from "../../shared/messages";
 import Table from "./table";
 import mainHandler from "../../shared/requestHandler";

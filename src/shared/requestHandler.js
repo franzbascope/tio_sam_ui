@@ -26,7 +26,9 @@ export default () => {
           break;
       }
     } catch (err) {
-      setGlobalValues({ ...globalValues, error: err });
+      let errorMessage = err.response.data.message;
+      setGlobalValues({ ...globalValues, error: errorMessage, loading: false });
+      return;
     }
     setGlobalValues({ ...globalValues, loading: false, success: message });
     return res;
