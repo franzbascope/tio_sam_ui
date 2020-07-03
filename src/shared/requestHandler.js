@@ -30,7 +30,11 @@ export default () => {
       setGlobalValues({ ...globalValues, error: errorMessage, loading: false });
       return;
     }
-    setGlobalValues({ ...globalValues, loading: false, success: message });
+    setGlobalValues({ ...globalValues, loading: false });
+    if (method != "GET") {
+      setGlobalValues({ ...globalValues, success: message });
+    }
+
     return res;
   };
   return requestHandler;
