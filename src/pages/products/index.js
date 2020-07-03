@@ -9,6 +9,7 @@ import * as Methods from "../../shared/methods";
 import { productsUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 export default () => {
   const [inputValues, setValues] = useState({
     products: [],
@@ -16,11 +17,12 @@ export default () => {
 
   const requestHandler = mainHandler();
   const [globalValues] = useGlobal();
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchProducts() {
       let res = await requestHandler(Methods.GET, productsUrl);
-      setValues({ ...inputValues, products: res.data.data });
+      setValues({ ...inputValues, products: res.data });
     }
     fetchProducts();
   }, []);
@@ -44,6 +46,10 @@ export default () => {
     }
   };
 
+  const editProduct = (id) => {
+    history.push(`/products/${id}`);
+  };
+
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -56,6 +62,9 @@ export default () => {
       ) : inputValues.products.length > 0 ? (
         <Table
           products={inputValues.products}
+          editProduct={(id) => {
+            editProduct(id);
+          }}
           deleteProduct={(id) => {
             deleteProduct(id);
           }}

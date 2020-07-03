@@ -34,7 +34,6 @@ export default () => {
     if (method != "GET") {
       setGlobalValues({ ...globalValues, success: message });
     }
-
     return res;
   };
   return requestHandler;

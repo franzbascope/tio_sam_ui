@@ -18,6 +18,9 @@ export default function App() {
           <Route path="/products/new">
             <NewProduct />
           </Route>
+          <Route path="/products/:id">
+            <NewProduct />
+          </Route>
           <Route path="/sells">
             <Sells />
           </Route>

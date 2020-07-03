@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 
-export default ({ products, deleteProduct }) => {
+export default ({ products, deleteProduct, editProduct }) => {
   return (
     <div className="table-responsive">
       <Table striped bordered hover>
@@ -28,7 +28,13 @@ export default ({ products, deleteProduct }) => {
                 <td>{weight} gr</td>
 
                 <td>
-                  <Button variant="success" className="ml-3 mr-3">
+                  <Button
+                    variant="success"
+                    className="ml-3 mr-3"
+                    onClick={() => {
+                      editProduct(_id);
+                    }}
+                  >
                     Edit
                   </Button>
                   <Button

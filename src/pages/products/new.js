@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import BreadCrumbs from "../../shared/breadCrumbs";
@@ -9,7 +9,7 @@ import { productsUrl } from "../../shared/urls";
 import mainHandler from "../../shared/requestHandler";
 import { useGlobal } from "reactn";
 import Messages from "../../shared/messages";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 export default () => {
   const [validated, setValidated] = useState(false);
@@ -41,6 +41,25 @@ export default () => {
       history.push("/products");
     }
   };
+  let { id: productId } = useParams();
+
+  useEffect(() => {
+    const getProduct = async () => {
+      let response = await requestHandler(
+        Methods.EDIT,
+        productsUrl,
+        null,
+        productId
+      );
+      debugger;
+      console.log(response);
+    };
+
+    if (productId) {
+      getProduct();
+    }
+  }, []);
+
   return (
     <React.Fragment>
       <BreadCrumbs />
