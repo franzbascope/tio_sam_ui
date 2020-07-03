@@ -1,24 +1,23 @@
-import React from "react";
+import React, { useGlobal } from "reactn";
 import { Alert } from "react-bootstrap";
-import mainState from "./mainState";
 
 export default () => {
-  const { inputValues, setValues } = mainState();
-  return inputValues.error ? (
+  const [globalValues, setGlobalValues] = useGlobal();
+  return globalValues.error ? (
     <Alert
       variant="danger"
-      onClose={() => setValues({ ...inputValues, error: "" })}
+      onClose={() => setGlobalValues({ ...globalValues, error: "" })}
       dismissible
     >
-      {inputValues.error}
+      {globalValues.error}
     </Alert>
-  ) : inputValues.success ? (
+  ) : globalValues.success ? (
     <Alert
       variant="success"
-      onClose={() => setValues({ ...inputValues, success: "" })}
+      onClose={() => setGlobalValues({ ...globalValues, success: "" })}
       dismissible
     >
-      {inputValues.success}
+      {globalValues.success}
     </Alert>
   ) : (
     <React.Fragment></React.Fragment>

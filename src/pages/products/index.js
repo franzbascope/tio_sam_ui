@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useGlobal } from "reactn";
 import { Breadcrumb, Button, Alert, Spinner } from "react-bootstrap";
 import Messages from "../../shared/messages";
 import Table from "./table";
 import mainHandler from "../../shared/requestHandler";
-import mainState from "../../shared/mainState";
 import * as Methods from "../../shared/methods";
 import { productsUrl } from "../../shared/urls";
 export default () => {
   const [inputValues, setValues] = useState({
     products: [],
   });
-  const { inputValues: globalValues } = mainState();
+
   const requestHandler = mainHandler();
+  const [globalValues, setGlobalValues] = useGlobal();
 
   useEffect(async () => {
     let res = await requestHandler(Methods.GET, productsUrl);

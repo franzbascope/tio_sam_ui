@@ -1,12 +1,12 @@
-import mainState from "./mainState";
 import axios from "axios";
+import { useGlobal } from "reactn";
 import { mainUrl as API_URL } from "./urls";
 
 export default () => {
-  const { inputValues, setValues } = mainState();
+  const [globalValues, setGlobalValues] = useGlobal();
   const requestHandler = async (method, url, data, id = null) => {
     let res = null;
-    setValues({ ...inputValues, loading: false });
+    setGlobalValues({ ...globalValues, loading: true });
     try {
       switch (method) {
         case "GET":
@@ -26,9 +26,9 @@ export default () => {
           break;
       }
     } catch (err) {
-      setValues({ ...inputValues, error: err });
+      setGlobalValues({ ...globalValues, error: err });
     }
-    setValues({ ...inputValues, loading: false });
+    setGlobalValues({ ...globalValues, loading: false });
     return res;
   };
   return requestHandler;
