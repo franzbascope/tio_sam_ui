@@ -20,10 +20,12 @@ export default () => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.stopPropagation();
+      setValidated(true);
+      debugger;
+    } else {
+      let request = parseFormToObject(event);
+      saveProduct(request);
     }
-    setValidated(true);
-    let request = parseFormToObject(event);
-    saveProduct(request);
   };
 
   const saveProduct = async (request) => {
