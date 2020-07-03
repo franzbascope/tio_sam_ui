@@ -11,6 +11,7 @@ export default ({ products, deleteProduct }) => {
             <th>Price</th>
             <th>Weight</th>
             <th>Cost</th>
+            <th>Cost Bs</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -20,9 +21,10 @@ export default ({ products, deleteProduct }) => {
             return (
               <tr key={_id}>
                 <td>{name}</td>
-                <td>{price}</td>
-                <td>{weight}</td>
-                <td>{cost}</td>
+                <td>{price} $</td>
+                <td>{weight} gr</td>
+                <td>{cost} $</td>
+                <td>{parseInt(cost * 6.97)} Bs</td>
                 <td>
                   <Button variant="success" className="ml-3 mr-3">
                     Edit
