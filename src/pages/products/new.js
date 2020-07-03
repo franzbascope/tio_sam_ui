@@ -9,11 +9,13 @@ import { productsUrl } from "../../shared/urls";
 import mainHandler from "../../shared/requestHandler";
 import { useGlobal } from "reactn";
 import Messages from "../../shared/messages";
+import { useHistory } from "react-router-dom";
 
 export default () => {
   const [validated, setValidated] = useState(false);
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,13 +30,16 @@ export default () => {
   };
 
   const saveProduct = async (request) => {
-    await requestHandler(
+    let response = await requestHandler(
       Methods.POST,
       productsUrl,
       request,
       null,
       "Product saved successfully"
     );
+    if (response) {
+      history.push("/products");
+    }
   };
   return (
     <React.Fragment>
