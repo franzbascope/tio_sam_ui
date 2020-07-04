@@ -13,6 +13,13 @@ import { useHistory, useParams } from "react-router-dom";
 
 export default () => {
   const [validated, setValidated] = useState(false);
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+    cost: "",
+    weight: "",
+    _id: null,
+  });
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
   const history = useHistory();
@@ -24,8 +31,8 @@ export default () => {
       event.stopPropagation();
       setValidated(true);
     } else {
-      let request = parseFormToObject(event);
-      saveProduct(request);
+      if (product._id) updateProduct(product);
+      else saveProduct(product);
     }
   };
 
@@ -41,6 +48,18 @@ export default () => {
       history.push("/products");
     }
   };
+  const updateProduct = async (request) => {
+    let response = await requestHandler(
+      Methods.PUT,
+      productsUrl,
+      request,
+      request._id,
+      "Product updated successfully"
+    );
+    if (response) {
+      history.push("/products");
+    }
+  };
   let { id: productId } = useParams();
 
   useEffect(() => {
@@ -51,8 +70,7 @@ export default () => {
         null,
         productId
       );
-      debugger;
-      console.log(response);
+      setProduct(response.data);
     };
 
     if (productId) {
@@ -60,6 +78,12 @@ export default () => {
     }
   }, []);
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setProduct({ ...product, [name]: value });
+  };
+
+  const { name, price, cost, weight, _id } = product;
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -73,11 +97,19 @@ export default () => {
               <Form.Row>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
                   <Form.Label>Name</Form.Label>
-                  <Form.Control name="name" required type="text" />
+                  <Form.Control
+                    onChange={handleChange}
+                    value={name}
+                    name="name"
+                    required
+                    type="text"
+                  />
                 </Form.Group>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
                   <Form.Label>Cost $</Form.Label>
                   <Form.Control
+                    value={cost}
+                    onChange={handleChange}
                     name="cost"
                     required
                     type="number"
@@ -87,17 +119,29 @@ export default () => {
                 </Form.Group>
                 <Form.Group md="4" as={Col} controlId="formGridPassword">
                   <Form.Label>Weight Gr</Form.Label>
-                  <Form.Control name="weight" required type="number" />
+                  <Form.Control
+                    value={weight}
+                    onChange={handleChange}
+                    name="weight"
+                    required
+                    type="number"
+                  />
                 </Form.Group>
               </Form.Row>
               <Form.Row>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
                   <Form.Label>Price Bs</Form.Label>
-                  <Form.Control name="price" required type="text" />
+                  <Form.Control
+                    value={price}
+                    onChange={handleChange}
+                    name="price"
+                    required
+                    type="text"
+                  />
                 </Form.Group>
               </Form.Row>
               <Button variant="primary" type="submit">
-                Save
+                {_id ? "Update" : "Save"}
               </Button>
               <Link to="/products" className="btn btn-danger ml-3">
                 Cancel
