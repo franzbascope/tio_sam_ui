@@ -5,9 +5,7 @@ export default (props) => {
   return (
     <React.Fragment>
       <NavigationBar />
-      <div className="m-5">
-        <Container fluid>{props.children}</Container>
-      </div>
+      <Container className="mt-5">{props.children}</Container>
     </React.Fragment>
   );
 };
