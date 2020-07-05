@@ -1,9 +1,9 @@
 import React from "react";
 import { Navbar, Nav, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import logo from "../assets/tioSamLogo.png";
+import { Link, useHistory } from "react-router-dom";
 
-const navigationBar = () => {
+export default () => {
+  const history = useHistory();
   return (
     <Navbar bg="white" className="border-bottom shadow-sm " variant="light">
       <Link className="navbar-brand" to="/">
@@ -24,10 +24,16 @@ const navigationBar = () => {
         </NavDropdown> */}
       </Nav>
       <Form inline>
-        <Button variant="outline-primary">Logout</Button>
+        <Button
+          onClick={() => {
+            sessionStorage.removeItem("tioSamUser");
+            history.push("/login");
+          }}
+          variant="outline-primary"
+        >
+          Logout
+        </Button>
       </Form>
     </Navbar>
   );
 };
-
-export default navigationBar;
