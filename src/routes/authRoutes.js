@@ -14,8 +14,8 @@ export default () => {
   let { url } = useRouteMatch();
 
   return (
-    <Switch>
-      <AppLayout>
+    <AppLayout>
+      <Switch>
         <Route path="/sells">
           <Sells />
         </Route>
@@ -28,7 +28,7 @@ export default () => {
         <Route path="*">
           <NoMatch />
         </Route>
-      </AppLayout>
-    </Switch>
+      </Switch>
+    </AppLayout>
   );
 };
