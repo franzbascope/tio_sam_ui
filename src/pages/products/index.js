@@ -22,7 +22,7 @@ export default () => {
   useEffect(() => {
     async function fetchProducts() {
       let res = await requestHandler(Methods.GET, productsUrl);
-      setValues({ ...inputValues, products: res.data });
+      if (res) setValues({ ...inputValues, products: res.data });
     }
     fetchProducts();
   }, []);

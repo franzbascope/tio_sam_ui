@@ -26,6 +26,9 @@ export default () => {
           break;
       }
     } catch (err) {
+      let errorCode = err.request.status;
+      if (errorCode == 401) sessionStorage.removeItem("tioSamUser");
+      console.log(err.request.status);
       let errorMessage = err.response.data.message;
       setGlobalValues({ ...globalValues, error: errorMessage, loading: false });
       return;
