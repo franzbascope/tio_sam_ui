@@ -70,10 +70,9 @@ export default () => {
         null,
         productId
       );
-      setProduct(response.data);
+      if (response) setProduct(response.data);
     };
-
-    if (productId) {
+    if (productId && productId != "new") {
       getProduct();
     }
   }, []);

@@ -29,7 +29,6 @@ export default function App() {
 }
 
 const isUserAuthenticated = () => {
-  return true;
   return sessionStorage.getItem("tioSamUser");
 };
 
