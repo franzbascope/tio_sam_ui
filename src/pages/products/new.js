@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import BreadCrumbs from "../../shared/breadCrumbs";
-import { parseFormToObject } from "../../utils/parseForm";
 import Loader from "../../shared/loader";
 import * as Methods from "../../shared/methods";
 import { productsUrl } from "../../shared/urls";
