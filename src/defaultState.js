@@ -3,4 +3,5 @@ export const GlobalState = {
   error: false,
   loading: false,
   user: null,
+  companies: [],
 };

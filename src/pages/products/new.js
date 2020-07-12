@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import BreadCrumbs from "../../shared/breadCrumbs";
 import Loader from "../../shared/loader";
 import * as Methods from "../../shared/methods";
-import { productsUrl } from "../../shared/urls";
+import { productsUrl, companyUrl } from "../../shared/urls";
 import mainHandler from "../../shared/requestHandler";
 import { useGlobal } from "reactn";
 import Messages from "../../shared/messages";
@@ -12,6 +12,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 export default () => {
   const [validated, setValidated] = useState(false);
+  const [companies, setCompanies] = useState([]);
   const [product, setProduct] = useState({
     name: "",
     price: "",
@@ -71,6 +72,11 @@ export default () => {
       );
       if (response) setProduct(response.data);
     };
+    const getCompanies = async () => {
+      let response = await requestHandler(Methods.GET, companyUrl);
+      if (response) setCompanies(response.data);
+    };
+    getCompanies();
     if (productId && productId != "new") {
       getProduct();
     }
