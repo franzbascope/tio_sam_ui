@@ -15,10 +15,11 @@ export default () => {
   const [companies, setCompanies] = useState([]);
   const [product, setProduct] = useState({
     name: "",
-    price: "",
-    cost: "",
+    price_bs: "",
+    cost_dollars: "",
     weight: "",
     _id: null,
+    company: "",
   });
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
@@ -37,6 +38,7 @@ export default () => {
   };
 
   const saveProduct = async (request) => {
+    debugger;
     let response = await requestHandler(
       Methods.POST,
       productsUrl,
@@ -87,7 +89,17 @@ export default () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const { name, price, cost, weight, _id } = product;
+  const { name, price_bs, cost_dollars, weight, _id, company } = product;
+
+  const getCompanyOptions = () => {
+    return companies.map((mapCompany) => {
+      return (
+        <option value={mapCompany._id} required={mapCompany._id == company}>
+          {mapCompany.name}
+        </option>
+      );
+    });
+  };
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -100,6 +112,19 @@ export default () => {
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Form.Row>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Company</Form.Label>
+                  <Form.Control
+                    onChange={handleChange}
+                    value={company}
+                    name="company"
+                    required
+                    as="select"
+                  >
+                    <option value="">Select a Company</option>
+                    {getCompanyOptions()}
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     onChange={handleChange}
@@ -107,18 +132,6 @@ export default () => {
                     name="name"
                     required
                     type="text"
-                  />
-                </Form.Group>
-                <Form.Group md="4" as={Col} controlId="formGridEmail">
-                  <Form.Label>Cost $</Form.Label>
-                  <Form.Control
-                    value={cost}
-                    onChange={handleChange}
-                    name="cost"
-                    required
-                    type="number"
-                    step="0.01"
-                    min="0"
                   />
                 </Form.Group>
                 <Form.Group md="4" as={Col} controlId="formGridPassword">
@@ -134,11 +147,23 @@ export default () => {
               </Form.Row>
               <Form.Row>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
-                  <Form.Label>Price Bs</Form.Label>
+                  <Form.Label>Cost USD</Form.Label>
                   <Form.Control
-                    value={price}
+                    value={cost_dollars}
                     onChange={handleChange}
-                    name="price"
+                    name="cost_dollars"
+                    required
+                    type="number"
+                    step="0.01"
+                    min="0"
+                  />
+                </Form.Group>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Price Bolivia Bs</Form.Label>
+                  <Form.Control
+                    value={price_bs}
+                    onChange={handleChange}
+                    name="price_bs"
                     required
                     type="text"
                   />
