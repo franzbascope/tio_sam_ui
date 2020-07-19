@@ -5,7 +5,7 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom";
-import NewBuy from "../pages/buys/new";
+import NewBuy from "../pages/buys/new/index";
 import Buys from "../pages/buys";
 
 export default () => {

@@ -89,6 +89,11 @@ export default () => {
     setProduct({ ...product, [name]: value });
   };
 
+  const handleChangeProductsChange = (event) => {
+    const { name, value } = event.target;
+    setProduct({ ...product, [name]: value });
+  };
+
   const { name, price_bs, cost_dollars, weight, _id, company } = product;
 
   const getCompanyOptions = () => {

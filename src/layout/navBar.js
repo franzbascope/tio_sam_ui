@@ -14,7 +14,7 @@ export default () => {
           Products
         </Link>
         <Link to="/buys" className="nav-link">
-          Compras
+          Buys
         </Link>
       </Nav>
       <Form inline>

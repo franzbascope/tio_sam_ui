@@ -36,6 +36,7 @@ export default () => {
           break;
       }
     } catch (err) {
+      debugger;
       let errorCode = err.request.status;
       if (errorCode == 401) {
         setGlobalValues({
