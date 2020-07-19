@@ -19,7 +19,7 @@ export default () => {
     date: "",
     payment_type: "",
     location: "",
-    taxes: "",
+    taxes: 0.0,
     products: [],
     _id: null,
   });
@@ -85,6 +85,14 @@ export default () => {
         ) : (
           <Card.Body>
             <BuyForm
+              deleteProduct={(productId) => {
+                setBuy({
+                  ...buy,
+                  products: buy.products.filter((mapProduct) => {
+                    return mapProduct._id != productId;
+                  }),
+                });
+              }}
               products={buy.products}
               form={buy}
               handleChange={(event) => {

@@ -1,7 +1,7 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 
-export default ({ products }) => {
+export default ({ products, deleteProduct }) => {
   return (
     <Table striped bordered hover>
       <thead>
@@ -9,6 +9,7 @@ export default ({ products }) => {
           <th>Product</th>
           <th>Price</th>
           <th>Quantity</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +19,21 @@ export default ({ products }) => {
               <td>{product.product.name}</td>
               <td>{product.price}</td>
               <td>{product.quantity}</td>
+              <td>
+                <Button
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "Are you sure you wanna delete this is item?"
+                      )
+                    )
+                      deleteProduct(product.product_id);
+                  }}
+                  variant="danger"
+                >
+                  Delete
+                </Button>
+              </td>
             </tr>
           );
         })}

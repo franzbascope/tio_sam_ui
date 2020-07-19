@@ -11,6 +11,7 @@ export default ({
   setModalVisible,
   form,
   products,
+  deleteProduct,
 }) => {
   const getLocationOptions = () => {
     return locations.map((location) => {
@@ -77,7 +78,7 @@ export default ({
         </Form.Group>
       </Form.Row>
       {products.length > 0 ? (
-        <ProductsTable products={products} />
+        <ProductsTable products={products} deleteProduct={deleteProduct} />
       ) : (
         <Alert variant="warning">No products registered yet</Alert>
       )}

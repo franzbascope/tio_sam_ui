@@ -71,7 +71,7 @@ export default ({ products, save, show, hide }) => {
                     ...values,
                     form: {
                       ...values.form,
-                      price: product.price_bs,
+                      price: product.cost_dollars,
                       product: product._id,
                     },
                   });
@@ -86,7 +86,7 @@ export default ({ products, save, show, hide }) => {
               </Form.Control>
             </Form.Group>
             <Form.Group md="4" as={Col} controlId="formGridEmail">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>Cost</Form.Label>
               <Form.Control
                 onChange={handleChange}
                 value={price}
