@@ -8,7 +8,7 @@ export default ({ products, save, show, hide }) => {
     products: [],
     form: {
       price: "",
-      quantity: "",
+      quantity: 1,
       product: "",
     },
   });
@@ -26,11 +26,20 @@ export default ({ products, save, show, hide }) => {
       event.stopPropagation();
       return;
     } else {
-      save();
+      let product = {
+        ...values.form,
+        product: getProductById(values.form.product),
+      };
+      save(product);
     }
   };
 
   const { quantity, price, product } = values.form;
+  const getProductById = (productId) => {
+    return products.filter((mapProduct) => {
+      return mapProduct._id == productId;
+    })[0];
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -56,7 +65,17 @@ export default ({ products, save, show, hide }) => {
             <Form.Group md="4" as={Col} controlId="formGridEmail">
               <Form.Label>Products</Form.Label>
               <Form.Control
-                onChange={handleChange}
+                onChange={(event) => {
+                  const product = getProductById(event.target.value);
+                  setValues({
+                    ...values,
+                    form: {
+                      ...values.form,
+                      price: product.price_bs,
+                      product: product._id,
+                    },
+                  });
+                }}
                 value={product}
                 name="product"
                 required

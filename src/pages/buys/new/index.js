@@ -74,6 +74,7 @@ export default () => {
         }}
         save={(product) => {
           setBuy({ ...buy, products: buy.products.concat(product) });
+          setModalVisible(false);
         }}
       />
       <BreadCrumbs />
@@ -84,6 +85,7 @@ export default () => {
         ) : (
           <Card.Body>
             <BuyForm
+              products={buy.products}
               form={buy}
               handleChange={(event) => {
                 const { name, value } = event.target;

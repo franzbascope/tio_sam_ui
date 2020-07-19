@@ -1,7 +1,7 @@
 import React from "react";
-import { Form, Col, Button } from "react-bootstrap";
+import { Form, Col, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import ProductsTable from "./table";
 export default ({
   handleChange,
   validated,
@@ -10,6 +10,7 @@ export default ({
   paymentTypes,
   setModalVisible,
   form,
+  products,
 }) => {
   const getLocationOptions = () => {
     return locations.map((location) => {
@@ -75,6 +76,12 @@ export default ({
           </Button>
         </Form.Group>
       </Form.Row>
+      {products.length > 0 ? (
+        <ProductsTable products={products} />
+      ) : (
+        <Alert variant="warning">No products registered yet</Alert>
+      )}
+
       <Button variant="primary" type="submit">
         {_id ? "Update" : "Save"}
       </Button>
