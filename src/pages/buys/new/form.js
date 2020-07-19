@@ -24,11 +24,21 @@ export default ({
     });
   };
 
-  const { payment_type, taxes, _id, location } = form;
+  const { payment_type, taxes, _id, location, date } = form;
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Row>
+        <Form.Group md="4" as={Col} controlId="formGridEmail">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            onChange={handleChange}
+            value={date}
+            name="date"
+            required
+            type="date"
+          />
+        </Form.Group>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
           <Form.Label>Payment Type</Form.Label>
           <Form.Control
@@ -55,6 +65,8 @@ export default ({
             {getLocationOptions()}
           </Form.Control>
         </Form.Group>
+      </Form.Row>
+      <Form.Row>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
           <Form.Label>Taxes</Form.Label>
           <Form.Control
@@ -65,10 +77,9 @@ export default ({
             type="number"
           />
         </Form.Group>
-      </Form.Row>
-      <Form.Row>
         <Form.Group md="4" as={Col}>
           <Button
+            className="m-4"
             onClick={() => {
               setModalVisible(true);
             }}

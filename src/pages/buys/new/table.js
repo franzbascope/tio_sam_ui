@@ -16,8 +16,8 @@ export default ({ products, deleteProduct }) => {
         {products.map((product) => {
           return (
             <tr>
-              <td>{product.product.name}</td>
-              <td>{product.price}</td>
+              <td>{product.name}</td>
+              <td>{product.cost_dollars}</td>
               <td>{product.quantity}</td>
               <td>
                 <Button
@@ -27,7 +27,7 @@ export default ({ products, deleteProduct }) => {
                         "Are you sure you wanna delete this is item?"
                       )
                     )
-                      deleteProduct(product.product_id);
+                      deleteProduct(product._id);
                   }}
                   variant="danger"
                 >

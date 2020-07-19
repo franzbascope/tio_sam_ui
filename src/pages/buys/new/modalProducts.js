@@ -3,11 +3,10 @@ import { Modal, Form, Col, Button } from "react-bootstrap";
 
 export default ({ products, save, show, hide }) => {
   const [values, setValues] = useState({
-    show: false,
     validated: false,
     products: [],
     form: {
-      price: "",
+      cost_dollars: "",
       quantity: 1,
       product: "",
     },
@@ -26,15 +25,28 @@ export default ({ products, save, show, hide }) => {
       event.stopPropagation();
       return;
     } else {
-      let product = {
-        ...values.form,
-        product: getProductById(values.form.product),
+      let product = getProductById(values.form.product);
+      const { quantity, cost_dollars } = values.form;
+      let saveProduct = {
+        ...product,
+        company: product.company._id,
+        product: product._id,
+        quantity,
+        cost_dollars,
       };
-      save(product);
+      setValues({
+        ...values,
+        form: {
+          cost_dollars: "",
+          quantity: 1,
+          product: "",
+        },
+      });
+      save(saveProduct);
     }
   };
 
-  const { quantity, price, product } = values.form;
+  const { quantity, cost_dollars, product } = values.form;
   const getProductById = (productId) => {
     return products.filter((mapProduct) => {
       return mapProduct._id == productId;
@@ -71,7 +83,7 @@ export default ({ products, save, show, hide }) => {
                     ...values,
                     form: {
                       ...values.form,
-                      price: product.cost_dollars,
+                      cost_dollars: product.cost_dollars,
                       product: product._id,
                     },
                   });
@@ -89,8 +101,8 @@ export default ({ products, save, show, hide }) => {
               <Form.Label>Cost</Form.Label>
               <Form.Control
                 onChange={handleChange}
-                value={price}
-                name="price"
+                value={cost_dollars}
+                name="cost_dollars"
                 required
                 type="number"
               />

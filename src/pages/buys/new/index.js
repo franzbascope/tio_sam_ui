@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Card } from "react-bootstrap";
 import BreadCrumbs from "../../../shared/breadCrumbs";
 import Loader from "../../../shared/loader";
 import * as Methods from "../../../shared/methods";
-import { productsUrl, companyUrl } from "../../../shared/urls";
+import { productsUrl, buysUrl } from "../../../shared/urls";
 import mainHandler from "../../../shared/requestHandler";
 import { useGlobal } from "reactn";
 import Messages from "../../../shared/messages";
@@ -16,10 +15,10 @@ export default () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
   const [buy, setBuy] = useState({
-    date: "",
     payment_type: "",
     location: "",
     taxes: 0.0,
+    date: "",
     products: [],
     _id: null,
   });
@@ -31,16 +30,17 @@ export default () => {
   const paymentTypes = ["BNB_VISA_CARD_BOLIVIA", "PNC_CARD_USA"];
   const locations = ["COSTCO_STORE", "COSTCO_ONLINE"];
 
-  const saveProduct = async (request) => {
+  const saveBuy = async () => {
+    let request = buy;
     let response = await requestHandler(
       Methods.POST,
-      productsUrl,
+      buysUrl,
       request,
       null,
-      "Product saved successfully"
+      "Buy saved successfully"
     );
     if (response) {
-      history.push("/products");
+      history.push("/buys");
     }
   };
   const updateProduct = async (request) => {
@@ -103,6 +103,17 @@ export default () => {
               handleSubmit={(event) => {
                 event.preventDefault();
                 setValidated(true);
+                const form = event.currentTarget;
+                if (form.checkValidity() === false) {
+                  event.stopPropagation();
+                  return;
+                } else {
+                  if (buy.products.length < 1) {
+                    alert("You need to add at least one product");
+                    return;
+                  }
+                  saveBuy();
+                }
               }}
               locations={locations}
               paymentTypes={paymentTypes}
