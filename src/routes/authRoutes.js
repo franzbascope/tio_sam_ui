@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import AppLayout from "../layout/index";
 import Sells from "../pages/sells";
+import BuysRoute from "./buys";
 import ProductsRoute from "./products";
 import NoMatch from "../pages/notFound";
 
@@ -21,6 +22,9 @@ export default () => {
         </Route>
         <Route path="/products">
           <ProductsRoute />
+        </Route>
+        <Route path="/buys">
+          <BuysRoute />
         </Route>
         <Route path="/" exact={true}>
           <h1>Welcome to Tio Sam Importaciones</h1>

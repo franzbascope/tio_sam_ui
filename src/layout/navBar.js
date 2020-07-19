@@ -13,15 +13,9 @@ export default () => {
         <Link to="/products" className="nav-link">
           Products
         </Link>
-        <Link to="/sells" className="nav-link">
-          Ventas
+        <Link to="/buys" className="nav-link">
+          Compras
         </Link>
-        {/* <NavDropdown title="Sells" id="basic-nav-dropdown">
-        
-          <NavDropdown.Item href="#action/3.1">New sell</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">List</NavDropdown.Item>
-          <NavDropdown.Divider />
-        </NavDropdown> */}
       </Nav>
       <Form inline>
         <Button
