@@ -64,6 +64,8 @@ export default () => {
     getProduct();
   }, []);
 
+  // some comment over here
+
   return (
     <React.Fragment>
       <ProductsModal
