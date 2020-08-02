@@ -97,7 +97,7 @@ export default ({
       <Button variant="primary" type="submit">
         {_id ? "Update" : "Save"}
       </Button>
-      <Link to="/products" className="btn btn-danger ml-3">
+      <Link to="/buys" className="btn btn-danger ml-3">
         Cancel
       </Link>
     </Form>
