@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 
-export default ({ buys, deletes, edit }) => {
+export default ({ buys, deleteBuys, editBuys }) => {
     return (
         <div className="table-responsive">
             <Table striped bordered hover>
@@ -38,7 +38,7 @@ export default ({ buys, deletes, edit }) => {
                                         variant="success"
                                         className="ml-3 mr-3"
                                         onClick={() => {
-                                            edit(_id);
+                                            editBuys(_id);
                                         }}
                                     >
                                         Edit
@@ -46,7 +46,7 @@ export default ({ buys, deletes, edit }) => {
                                     <Button
                                         variant="danger"
                                         onClick={() => {
-                                            deletes(_id);
+                                            deleteBuys(_id);
                                         }}
                                     >
                                         Delete

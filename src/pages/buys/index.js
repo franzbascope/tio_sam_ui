@@ -18,6 +18,26 @@ export default () => {
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
 
+  const deleteBuys = async (id) => {
+    if (window.confirm("Are you sure you want to delete this buy?")) {
+      console.log(`Buy id sent ${id}`);
+      await requestHandler(
+        Methods.DELETE,
+        buysUrl,
+        null,
+        id,
+        "Buy deleted successfully"
+      );
+      let buys = inputValues.buys.filter((buy) => {
+        return buy._id != id;
+      });
+      setValues({
+        ...inputValues,
+        buys,
+      });
+    }
+  };
+
   useEffect(() => {
     async function fetchProducts() {
       let res = await requestHandler(Methods.GET, buysUrl);
@@ -32,7 +52,14 @@ export default () => {
         New Buy
       </Link>
       <Messages />
-      {globalValues.loading ? <Loader /> : <Table buys={inputValues.buys} />}
+      {globalValues.loading ?
+        <Loader /> : 
+        <Table 
+          buys={inputValues.buys} 
+          deleteBuys={(id) => { 
+            deleteBuys(id); 
+          }} 
+        />}
     </React.Fragment>
   );
 };
