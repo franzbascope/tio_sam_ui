@@ -10,6 +10,8 @@ import Messages from "../../../shared/messages";
 import { useHistory, useParams } from "react-router-dom";
 import ProductsModal from "./modalProducts";
 import BuyForm from "./form";
+import moment from 'moment';
+
 export default () => {
   const [validated, setValidated] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -46,21 +48,37 @@ export default () => {
   const updateProduct = async (request) => {
     let response = await requestHandler(
       Methods.PUT,
-      productsUrl,
+      buysUrl,
       request,
       request._id,
-      "Product updated successfully"
+      "Buy updated successfully"
     );
     if (response) {
-      history.push("/products");
+      history.push("/buys");
     }
   };
+
+  let { id: buysId } = useParams();
 
   useEffect(() => {
     const getProduct = async () => {
       let response = await requestHandler(Methods.GET, productsUrl);
       if (response) setAllProducts(response.data);
     };
+    const getBuys = async () => {
+      let response = await requestHandler(
+        Methods.EDIT,
+        buysUrl,
+        null,
+        buysId
+      );
+      let data = response.data;
+      if (data) setBuy({ ...data, date: moment(data.date).utc().format("YYYY-MM-DD") });
+    };
+
+    if (buysId && buysId != "new") {
+      getBuys();
+    }
     getProduct();
   }, []);
 
@@ -85,46 +103,47 @@ export default () => {
         {globalValues.loading ? (
           <Loader />
         ) : (
-          <Card.Body>
-            <BuyForm
-              deleteProduct={(productId) => {
-                setBuy({
-                  ...buy,
-                  products: buy.products.filter((mapProduct) => {
-                    return mapProduct._id != productId;
-                  }),
-                });
-              }}
-              products={buy.products}
-              form={buy}
-              handleChange={(event) => {
-                const { name, value } = event.target;
-                setBuy({ ...buy, [name]: value });
-              }}
-              validated={validated}
-              handleSubmit={(event) => {
-                event.preventDefault();
-                setValidated(true);
-                const form = event.currentTarget;
-                if (form.checkValidity() === false) {
-                  event.stopPropagation();
-                  return;
-                } else {
-                  if (buy.products.length < 1) {
-                    alert("You need to add at least one product");
+            <Card.Body>
+              <BuyForm
+                deleteProduct={(productId) => {
+                  setBuy({
+                    ...buy,
+                    products: buy.products.filter((mapProduct) => {
+                      return mapProduct._id != productId;
+                    }),
+                  });
+                }}
+                products={buy.products}
+                form={buy}
+                handleChange={(event) => {
+                  const { name, value } = event.target;
+                  setBuy({ ...buy, [name]: value });
+                }}
+                validated={validated}
+                handleSubmit={(event) => {
+                  event.preventDefault();
+                  setValidated(true);
+                  const form = event.currentTarget;
+                  if (form.checkValidity() === false) {
+                    event.stopPropagation();
                     return;
+                  } else {
+                    if (buy.products.length < 1) {
+                      alert("You need to add at least one product");
+                      return;
+                    }
+                    if (buy._id) updateProduct(buy);
+                    else saveBuy();
                   }
-                  saveBuy();
-                }
-              }}
-              locations={locations}
-              paymentTypes={paymentTypes}
-              setModalVisible={() => {
-                setModalVisible(true);
-              }}
-            />
-          </Card.Body>
-        )}
+                }}
+                locations={locations}
+                paymentTypes={paymentTypes}
+                setModalVisible={() => {
+                  setModalVisible(true);
+                }}
+              />
+            </Card.Body>
+          )}
       </Card>
     </React.Fragment>
   );
