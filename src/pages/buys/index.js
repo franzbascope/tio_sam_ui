@@ -8,7 +8,7 @@ import Table from './table';
 import mainHandler from "../../shared/requestHandler";
 import { buysUrl } from "../../shared/urls";
 import * as Methods from "../../shared/methods";
-
+import { useHistory } from "react-router-dom";
 
 export default () => {
 
@@ -17,6 +17,7 @@ export default () => {
   });
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
+  const history = useHistory();
 
   const deleteBuys = async (id) => {
     if (window.confirm("Are you sure you want to delete this buy?")) {
@@ -36,6 +37,10 @@ export default () => {
         buys,
       });
     }
+  };
+
+  const editBuys = (id) => {
+    history.push(`/buys/${id}`);
   };
 
   useEffect(() => {
@@ -58,7 +63,10 @@ export default () => {
           buys={inputValues.buys} 
           deleteBuys={(id) => { 
             deleteBuys(id); 
-          }} 
+          }}
+          editBuys={(id) =>{
+            editBuys(id);
+          }}
         />}
     </React.Fragment>
   );
