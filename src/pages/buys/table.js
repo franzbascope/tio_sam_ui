@@ -10,7 +10,6 @@ export default ({ buys, deleteBuys, editBuys }) => {
                         <th>Name</th>
                         <th>Cost Dollars</th>
                         <th>Total Weight Kg</th>
-                        <th>Products</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,12 +26,6 @@ export default ({ buys, deleteBuys, editBuys }) => {
                                 <td>{name}</td>
                                 <td>{cost_dollars.toFixed(2)}</td>
                                 <td>{total_weight_kg.toFixed(2)} Kg</td>
-                                <td>
-                                    <Button>
-                                        See Products
-                                    </Button>
-                                </td>
-
                                 <td>
                                     <Button
                                         variant="success"
