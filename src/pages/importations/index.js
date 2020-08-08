@@ -62,7 +62,7 @@ export default () => {
         <Loader />
       ) : (
         <Table
-          buys={inputValues.importations}
+          importations={inputValues.importations}
           deleteImportation={(id) => {
             deleteImportation(id);
           }}
