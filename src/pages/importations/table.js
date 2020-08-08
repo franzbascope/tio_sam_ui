@@ -1,7 +1,10 @@
 import React from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Alert } from "react-bootstrap";
 
 export default ({ importations, deleteImportation, edit }) => {
+  if (importations.length < 1) {
+    return <Alert variant="warning">No records added, Add one !!!</Alert>;
+  }
   return (
     <div className="table-responsive">
       <Table striped bordered hover>
@@ -28,7 +31,7 @@ export default ({ importations, deleteImportation, edit }) => {
             return (
               <tr key={_id}>
                 <td>{departure_date}</td>
-                <td>{departustatere_date}</td>
+                <td>{departure_date}</td>
                 <td>{value_dollars.toFixed(2)} $ </td>
                 <td>{shipping_real_kg.toFixed(2)} Kg</td>
                 <td>{shipping_cost_dollars.toFixed(2)} $</td>
