@@ -7,31 +7,33 @@ export default ({ products, deleteProduct, editProduct }) => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Company</th>
             <th>Name</th>
+            <th>Items / Lot</th>
             <th>Cost Dollars</th>
             <th>Price Bs</th>
+            <th>Price Wholesale Bs</th>
             <th>Weight</th>
-
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => {
             const {
+              lot,
               price_bs,
               weight,
               cost_dollars,
               name,
               _id,
-              company,
+              price_wholesale_bs,
             } = product;
             return (
               <tr key={_id}>
-                <td>{company.name}</td>
                 <td>{name}</td>
+                <td>{lot}</td>
                 <td>{cost_dollars} usd</td>
                 <td>{price_bs} Bs</td>
+                <td>{price_wholesale_bs} Bs</td>
                 <td>{weight} gr</td>
 
                 <td>

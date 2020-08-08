@@ -1,4 +1,4 @@
-export const mainUrl = "https://devtiosam.herokuapp.com";
+export const mainUrl = "http://localhost:3000";
 export const productsUrl = "products";
 export const buysUrl = "buys";
 export const loginUrl = "auth/login";
