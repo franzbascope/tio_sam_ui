@@ -10,6 +10,7 @@ import Sells from "../pages/sells";
 import BuysRoute from "./buys";
 import ImportationsRoute from "./importations";
 import ProductsRoute from "./products";
+import ClientsRoute from "./clients";
 import NoMatch from "../pages/notFound";
 
 export default () => {
@@ -20,6 +21,9 @@ export default () => {
       <Switch>
         <Route path="/sells">
           <Sells />
+        </Route>
+        <Route path="/clients">
+          <ClientsRoute />
         </Route>
         <Route path="/products">
           <ProductsRoute />

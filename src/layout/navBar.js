@@ -19,6 +19,9 @@ export default () => {
         <Link to="/importations" className="nav-link">
           Importations
         </Link>
+        <Link to="/clients" className="nav-link">
+          Clients
+        </Link>
       </Nav>
       <Form inline>
         <Button
