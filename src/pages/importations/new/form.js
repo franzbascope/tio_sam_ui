@@ -1,103 +1,95 @@
 import React from "react";
 import { Form, Col, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import ProductsTable from "./table";
+import MultiSelect from "react-multi-select-component";
 export default ({
   handleChange,
   validated,
   handleSubmit,
-  locations,
-  paymentTypes,
-  setModalVisible,
+  shipmentStates,
   form,
-  products,
-  deleteProduct,
+  buys,
+  addBuy,
 }) => {
-  const getLocationOptions = () => {
-    return locations.map((location) => {
-      return <option value={location}>{location}</option>;
+  const getBuyOptions = () => {
+    return buys.map((buy) => {
+      return { label: buy.name, value: buy._id };
     });
   };
-  const getPaymentOptions = () => {
-    return paymentTypes.map((payment) => {
-      return <option value={payment}>{payment}</option>;
+  const getShipmentStateOptions = () => {
+    return shipmentStates.map((state) => {
+      return (
+        <option key={state} value={state}>
+          {state}
+        </option>
+      );
     });
   };
 
-  const { payment_type, taxes, _id, location, date } = form;
+  const { state, _id, arrival_date, departure_date, shipping_real_kg } = form;
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Row>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
-          <Form.Label>Date</Form.Label>
+          <Form.Label>Departure Date</Form.Label>
           <Form.Control
             onChange={handleChange}
-            value={date}
-            name="date"
+            value={departure_date}
+            name="departure_date"
             required
             type="date"
           />
         </Form.Group>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
-          <Form.Label>Payment Type</Form.Label>
+          <Form.Label>Arrival Date</Form.Label>
           <Form.Control
             onChange={handleChange}
-            value={payment_type}
-            name="payment_type"
-            required
-            as="select"
-          >
-            <option value="">Select a payment type</option>
-            {getPaymentOptions()}
-          </Form.Control>
+            value={arrival_date}
+            name="arrival_date"
+            type="date"
+          />
         </Form.Group>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
-          <Form.Label>Location</Form.Label>
+          <Form.Label>Shipment State</Form.Label>
           <Form.Control
             onChange={handleChange}
-            value={location}
-            name="location"
+            value={state}
+            name="state"
             required
             as="select"
           >
-            <option value="">Select a location</option>
-            {getLocationOptions()}
+            <option value="">Select a state</option>
+            {getShipmentStateOptions()}
           </Form.Control>
         </Form.Group>
       </Form.Row>
       <Form.Row>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
-          <Form.Label>Taxes</Form.Label>
+          <Form.Label>Net Weight Kg</Form.Label>
           <Form.Control
             onChange={handleChange}
-            value={taxes}
-            name="taxes"
+            value={shipping_real_kg}
+            name="shipping_real_kg"
             required
             type="number"
           />
         </Form.Group>
-        <Form.Group md="4" as={Col}>
-          <Button
-            className="m-4"
-            onClick={() => {
-              setModalVisible(true);
+        <Form.Group md="4" as={Col} controlId="formGridEmail">
+          <Form.Label>Buys</Form.Label>
+          <MultiSelect
+            options={getBuyOptions()}
+            value={form.buys}
+            onChange={(event) => {
+              addBuy(event);
             }}
-          >
-            Add Products
-          </Button>
+          />
         </Form.Group>
       </Form.Row>
-      {products.length > 0 ? (
-        <ProductsTable products={products} deleteProduct={deleteProduct} />
-      ) : (
-        <Alert variant="warning">No products registered yet</Alert>
-      )}
-
       <Button variant="primary" type="submit">
         {_id ? "Update" : "Save"}
       </Button>
-      <Link to="/buys" className="btn btn-danger ml-3">
+      <Link to="/importations" className="btn btn-danger ml-3">
         Cancel
       </Link>
     </Form>

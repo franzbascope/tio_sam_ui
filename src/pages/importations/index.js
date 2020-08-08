@@ -54,7 +54,7 @@ export default () => {
   return (
     <React.Fragment>
       <BreadCrumbs />
-      <Link className="mt-3 mb-3 btn btn-primary" to="/buys/new">
+      <Link className="mt-3 mb-3 btn btn-primary" to="/importations/new">
         New Importation
       </Link>
       <Messages />
