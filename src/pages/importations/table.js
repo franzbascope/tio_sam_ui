@@ -13,7 +13,8 @@ export default ({ importations, deleteImportation, edit }) => {
             <th>Fecha Salida</th>
             <th>Estado</th>
             <th>Valor $</th>
-            <th>Peso Kg</th>
+            <th>Peso Estimado Kg</th>
+            <th>Peso Neto Kg</th>
             <th>Costo Envio $</th>
             <th>Actions</th>
           </tr>
@@ -27,12 +28,14 @@ export default ({ importations, deleteImportation, edit }) => {
               value_dollars,
               shipping_real_kg,
               shipping_cost_dollars,
+              shipping_estimated_kg,
             } = importation;
             return (
               <tr key={_id}>
                 <td>{departure_date}</td>
-                <td>{departure_date}</td>
+                <td>{state}</td>
                 <td>{value_dollars.toFixed(2)} $ </td>
+                <td>{shipping_estimated_kg.toFixed(2)} Kg</td>
                 <td>{shipping_real_kg.toFixed(2)} Kg</td>
                 <td>{shipping_cost_dollars.toFixed(2)} $</td>
                 <td>
