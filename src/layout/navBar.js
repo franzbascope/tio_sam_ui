@@ -22,6 +22,9 @@ export default () => {
         <Link to="/clients" className="nav-link">
           Clients
         </Link>
+        <Link to="/sells" className="nav-link">
+          Sells
+        </Link>
       </Nav>
       <Form inline>
         <Button

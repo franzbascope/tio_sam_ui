@@ -6,7 +6,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import AppLayout from "../layout/index";
-import Sells from "../pages/sells";
+import Sells from "../routes/sells";
 import BuysRoute from "./buys";
 import ImportationsRoute from "./importations";
 import ProductsRoute from "./products";

@@ -5,3 +5,4 @@ export const loginUrl = "auth/login";
 export const companyUrl = "companies";
 export const importationUrl = "importations";
 export const clientUrl = "clients";
+export const sellSurl = "sells";
