@@ -10,8 +10,10 @@ export default ({ products, deleteProduct, editProduct }) => {
             <th>Name</th>
             <th>Items / Lot</th>
             <th>Cost Dollars</th>
-            <th>Price Bs</th>
+            <th>Total Cost Bs</th>
+            <th>Price Unit Bs</th>
             <th>Price Wholesale Bs</th>
+            <th>Price Lot Bs</th>
             <th>Weight</th>
             <th>Actions</th>
           </tr>
@@ -26,16 +28,19 @@ export default ({ products, deleteProduct, editProduct }) => {
               name,
               _id,
               price_wholesale_bs,
+              price_lot_bs,
+              total_cost_bs,
             } = product;
             return (
               <tr key={_id}>
                 <td>{name}</td>
                 <td>{lot}</td>
                 <td>{cost_dollars} usd</td>
+                <td>{total_cost_bs} Bs</td>
                 <td>{price_bs} Bs</td>
                 <td>{price_wholesale_bs} Bs</td>
+                <td>{price_lot_bs} Bs</td>
                 <td>{weight} gr</td>
-
                 <td>
                   <Button
                     variant="success"

@@ -22,6 +22,7 @@ export default () => {
     _id: null,
     company: "",
     lot: "",
+    price_lot_bs: "",
   });
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
@@ -105,6 +106,7 @@ export default () => {
     company,
     price_wholesale_bs,
     lot,
+    price_lot_bs,
   } = product;
 
   const getCompanyOptions = () => {
@@ -196,6 +198,16 @@ export default () => {
                 </Form.Group>
               </Form.Row>
               <Form.Row>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Price Lot BS</Form.Label>
+                  <Form.Control
+                    value={price_lot_bs}
+                    onChange={handleChange}
+                    name="price_lot_bs"
+                    required
+                    type="number"
+                  />
+                </Form.Group>
                 <Form.Group md="4" as={Col} controlId="formGridEmail">
                   <Form.Label>Lot (Items per box)</Form.Label>
                   <Form.Control
