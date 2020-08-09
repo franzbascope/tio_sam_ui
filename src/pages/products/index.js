@@ -50,6 +50,10 @@ export default () => {
     history.push(`/products/${id}`);
   };
 
+  const productsDetail = (id) => {
+    history.push(`/products/detail/${id}`);
+  };
+
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -62,6 +66,9 @@ export default () => {
       ) : inputValues.products.length > 0 ? (
         <Table
           products={inputValues.products}
+          productsDetail={(id) => {
+            productsDetail(id);
+          }}
           editProduct={(id) => {
             editProduct(id);
           }}

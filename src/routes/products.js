@@ -7,12 +7,16 @@ import {
 } from "react-router-dom";
 import NewProduct from "../pages/products/new";
 import Products from "../pages/products";
+import ProductDetail from "../pages/products/detail";
 
 export default () => {
   let { url } = useRouteMatch();
 
   return (
     <Switch>
+      <Route path={`${url}/detail/:id`}>
+        <ProductDetail />
+      </Route>
       <Route path={`${url}/:id`}>
         <NewProduct />
       </Route>
