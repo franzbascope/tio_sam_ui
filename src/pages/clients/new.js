@@ -80,7 +80,7 @@ export default () => {
     setClient({ ...client, [name]: value });
   };
 
-  const { name, _id, city } = client;
+  const { name, _id, city, cellphone_number } = client;
   const cities = ["SCZ", "CBBA"];
   const getCityOptions = () => {
     return cities.map((city) => {
@@ -120,6 +120,15 @@ export default () => {
                     <option value="">Select a city</option>
                     {getCityOptions()}
                   </Form.Control>
+                </Form.Group>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Cellphone Number</Form.Label>
+                  <Form.Control
+                    onChange={handleChange}
+                    value={cellphone_number}
+                    name="cellphone_number"
+                    type="text"
+                  />
                 </Form.Group>
               </Form.Row>
               <Button variant="primary" type="submit">

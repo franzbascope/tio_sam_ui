@@ -9,16 +9,18 @@ export default ({ clients, deleteClient, editClient }) => {
           <tr>
             <th>Name</th>
             <th>City</th>
+            <th>Cellphone Number</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {clients.map((client) => {
-            const { name, city, _id } = client;
+            const { name, city, _id, cellphone_number } = client;
             return (
               <tr key={_id}>
                 <td>{name}</td>
                 <td>{city}</td>
+                <td>{cellphone_number}</td>
                 <td>
                   <Button
                     variant="success"
