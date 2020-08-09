@@ -30,7 +30,7 @@ export default ({ products, deleteProduct, editProduct, productsDetail }) => {
                 <td>{name}</td>
                 <td>{lot}</td>
                 <td>{cost_dollars} usd</td>
-                <td>{total_cost_bs} Bs</td>
+                <td>{total_cost_bs.toFixed(2)} Bs</td>
                 <td>{price_bs} Bs</td>
                 <td style={{ minWidth: "200px" }}>
                   <Button
