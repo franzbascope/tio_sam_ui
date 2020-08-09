@@ -4,7 +4,7 @@ import Messages from "../../shared/messages";
 import Table from "./table";
 import mainHandler from "../../shared/requestHandler";
 import * as Methods from "../../shared/methods";
-import { sellSurl } from "../../shared/urls";
+import { sellUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -19,7 +19,7 @@ export default () => {
 
   useEffect(() => {
     async function fetchSells() {
-      let res = await requestHandler(Methods.GET, sellSurl);
+      let res = await requestHandler(Methods.GET, sellUrl);
       if (res) setValues({ ...inputValues, products: res.data });
     }
     fetchSells();
@@ -29,7 +29,7 @@ export default () => {
     if (window.confirm("Are you sure you want to delete this sell?")) {
       await requestHandler(
         Methods.DELETE,
-        sellSurl,
+        sellUrl,
         null,
         id,
         "Sell deleted successfully"
