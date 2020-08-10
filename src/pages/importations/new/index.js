@@ -9,6 +9,7 @@ import { useGlobal } from "reactn";
 import Messages from "../../../shared/messages";
 import { useHistory, useParams } from "react-router-dom";
 import Form from "./form";
+import moment from "moment";
 
 export default () => {
   const [validated, setValidated] = useState(false);
@@ -48,6 +49,12 @@ export default () => {
     }
   };
   const updateImportation = async (request) => {
+    request = {
+      ...importation,
+      buys: importation.buys.map((buy) => {
+        return buy.value;
+      }),
+    };
     let response = await requestHandler(
       Methods.PUT,
       importationUrl,
@@ -67,6 +74,17 @@ export default () => {
       let response = await requestHandler(Methods.GET, buysUrl);
       if (response) setAllBuys(response.data);
     };
+    const getOneBuy = async (id) => {
+      let response = await requestHandler(
+        Methods.EDIT,
+        buysUrl,
+        null,
+        id
+      );
+      let data = response.data;
+      return data;
+    }
+
     const getImportation = async () => {
       let response = await requestHandler(
         Methods.EDIT,
@@ -75,12 +93,24 @@ export default () => {
         importationId
       );
       let data = response.data;
-      if (data)
+      if (data) {
+        const list = [];
+        await Promise.all(
+          data.buys.map(async (buy) => {
+            let newBuy = await getOneBuy(buy);
+            list.push({ label: newBuy.name, value: buy });
+          })
+        );
         setImportation({
           ...data,
+          arrival_date: moment(data.arrival_date).utc().format("YYYY-MM-DD"),
+          departure_date: moment(data.departure_date)
+            .utc()
+            .format("YYYY-MM-DD"),
+          buys: list,
         });
+      }
     };
-
     if (importationId && importationId != "new") {
       getImportation();
     }
@@ -117,6 +147,7 @@ export default () => {
                   ...importation,
                   buys: buys,
                 });
+                console.log(buys);
               }}
               handleChange={(event) => {
                 const { name, value } = event.target;

@@ -16,6 +16,7 @@ export default ({
       return { label: buy.name, value: buy._id };
     });
   };
+
   const getShipmentStateOptions = () => {
     return shipmentStates.map((state) => {
       return (
