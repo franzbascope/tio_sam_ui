@@ -52,7 +52,7 @@ export default () => {
     request = {
       ...importation,
       buys: importation.buys.map((buy) => {
-        return buy.value;
+        return JSON.parse(buy.value);
       }),
     };
     let response = await requestHandler(
@@ -74,11 +74,6 @@ export default () => {
       let response = await requestHandler(Methods.GET, buysUrl);
       if (response) setAllBuys(response.data);
     };
-    const getOneBuy = async (id) => {
-      let response = await requestHandler(Methods.EDIT, buysUrl, null, id);
-      let data = response.data;
-      return data;
-    };
 
     const getImportation = async () => {
       let response = await requestHandler(
@@ -90,12 +85,9 @@ export default () => {
       let data = response.data;
       if (data) {
         const list = [];
-        await Promise.all(
-          data.buys.map(async (buy) => {
-            let newBuy = await getOneBuy(buy);
-            list.push({ label: newBuy.name, value: buy });
-          })
-        );
+        data.buys.map((buy) => {
+          list.push({ label: buy.name, value: JSON.stringify(buy) });
+        });
         setImportation({
           ...data,
           arrival_date: moment(data.arrival_date).utc().format("YYYY-MM-DD"),
@@ -104,6 +96,7 @@ export default () => {
             .format("YYYY-MM-DD"),
           buys: list,
         });
+        console.log(list);
       }
     };
     if (importationId && importationId != "new") {
@@ -142,7 +135,6 @@ export default () => {
                   ...importation,
                   buys: buys,
                 });
-                console.log(buys);
               }}
               handleChange={(event) => {
                 const { name, value } = event.target;
