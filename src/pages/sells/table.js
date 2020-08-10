@@ -57,7 +57,6 @@ export default ({ sells, loading, edit, deletes, detail }) => {
             </tr>
           );
         })}
-        <tr></tr>
       </tbody>
     </Table>
   );

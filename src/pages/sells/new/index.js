@@ -7,30 +7,33 @@ import Messages from "../../../shared/messages";
 import { useHistory, useParams } from "react-router-dom";
 import BreadCrumbs from "../../../shared/breadCrumbs";
 import Form from "./form";
+import DetailForm from "./details";
 
 export default () => {
+  const [show, setShow] = useState(false);
   const [clients, setClients] = useState([]);
   const [products, setProducts] = useState([]);
   const [sell, setSell] = useState({
     client: "",
-    price_bs: 0,
-    price_wholesale_bs: 0,
-    cost_dollars: 0,
-    weight: 0,
+    delivery_cost: "",
+    total_payment: 0,
     _id: null,
-    company: "",
-    lot: "",
-    price_lot_bs: "",
+    delivery_price: "",
+    details: [],
   });
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
   const history = useHistory();
 
-  const save = async (request) => {
+  const save = async () => {
+    if (sell.details.length < 1) {
+      alert("Need to add at least one product");
+      return;
+    }
     let response = await requestHandler(
       Methods.POST,
       sellUrl,
-      request,
+      sell,
       null,
       "Sell saved successfully"
     );
@@ -77,16 +80,14 @@ export default () => {
     setSell({ ...sell, [name]: value });
   };
 
-  const handleDetailChange = (event) => {
-    const { name, value } = event.target;
-    setSell({ ...sell, [name]: value });
-  };
-
   return (
     <React.Fragment>
       <BreadCrumbs />
       <Messages />
       <Form
+        showModal={() => {
+          setShow(true);
+        }}
         loading={globalValues.loading}
         save={(sell) => {
           save(sell);
@@ -97,12 +98,37 @@ export default () => {
         handleChange={(e) => {
           handleChange(e);
         }}
-        handleDetailChange={(e) => {
-          handleDetailChange(e);
+        deleteDetail={(id) => {
+          if (window.confirm()) {
+            setSell({
+              ...sell,
+              details: sell.details.filter((detail) => {
+                return detail.id !== id;
+              }),
+            });
+          }
         }}
         sell={sell}
         clients={clients}
         products={products}
+      />
+      <DetailForm
+        products={products}
+        add={(detail) => {
+          detail.product = JSON.parse(detail.product);
+          detail.id = new Date().getUTCMilliseconds();
+          detail.subtotal = detail.price * detail.quantity;
+          setSell({
+            ...sell,
+            details: sell.details.concat(detail),
+            total_payment: sell.total_payment + detail.subtotal,
+          });
+          setShow(false);
+        }}
+        show={show}
+        close={() => {
+          setShow(false);
+        }}
       />
     </React.Fragment>
   );
