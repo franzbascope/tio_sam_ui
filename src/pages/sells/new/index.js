@@ -25,15 +25,24 @@ export default () => {
   const requestHandler = mainHandler();
   const history = useHistory();
 
+  const getClientById = (client_id, clients) => {
+    return clients.filter((client) => {
+      return client._id == client_id;
+    })[0];
+  };
+
   const save = async () => {
     if (sell.details.length < 1) {
       alert("Need to add at least one product");
       return;
     }
+    let clientObject = getClientById(sell.client, clients);
+    let request = sell;
+    request.client = clientObject;
     let response = await requestHandler(
       Methods.POST,
       sellUrl,
-      sell,
+      request,
       null,
       "Sell saved successfully"
     );
