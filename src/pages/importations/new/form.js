@@ -52,21 +52,6 @@ export default ({
           />
         </Form.Group>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
-          <Form.Label>Shipment State</Form.Label>
-          <Form.Control
-            onChange={handleChange}
-            value={state}
-            name="state"
-            required
-            as="select"
-          >
-            <option value="">Select a state</option>
-            {getShipmentStateOptions()}
-          </Form.Control>
-        </Form.Group>
-      </Form.Row>
-      <Form.Row>
-        <Form.Group md="4" as={Col} controlId="formGridEmail">
           <Form.Label>Net Weight Kg</Form.Label>
           <Form.Control
             onChange={handleChange}
@@ -76,6 +61,8 @@ export default ({
             type="number"
           />
         </Form.Group>
+      </Form.Row>
+      <Form.Row>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
           <Form.Label>Buys</Form.Label>
           <MultiSelect
