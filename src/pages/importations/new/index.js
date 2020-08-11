@@ -31,12 +31,7 @@ export default () => {
   const locations = ["COSTCO_STORE", "COSTCO_ONLINE"];
 
   const saveImportation = async () => {
-    let request = {
-      ...importation,
-      buys: importation.buys.map((buy) => {
-        return JSON.parse(buy.value);
-      }),
-    };
+    let request = addBuysToImportation(importation, allBuys);
     let response = await requestHandler(
       Methods.POST,
       importationUrl,
@@ -48,13 +43,27 @@ export default () => {
       history.push("/importations");
     }
   };
-  const updateImportation = async (request) => {
-    request = {
+
+  const addBuysToImportation = (importation, buys) => {
+    return {
       ...importation,
       buys: importation.buys.map((buy) => {
-        return JSON.parse(buy.value);
+        return getBuyById(buy.value, buys);
       }),
     };
+  };
+
+  const getBuyById = (_id, buys) => {
+    try {
+      return buys.filter((buy) => {
+        return buy._id == _id;
+      })[0];
+    } catch (e) {
+      return null;
+    }
+  };
+  const updateImportation = async () => {
+    let request = addBuysToImportation(importation, allBuys);
     let response = await requestHandler(
       Methods.PUT,
       importationUrl,
@@ -84,19 +93,17 @@ export default () => {
       );
       let data = response.data;
       if (data) {
-        const list = [];
-        data.buys.map((buy) => {
-          list.push({ label: buy.name, value: JSON.stringify(buy) });
+        let importation = data;
+        importation.buys = importation.buys.map((buy) => {
+          return { label: buy.name, value: buy._id };
         });
         setImportation({
-          ...data,
+          ...importation,
           arrival_date: moment(data.arrival_date).utc().format("YYYY-MM-DD"),
           departure_date: moment(data.departure_date)
             .utc()
             .format("YYYY-MM-DD"),
-          buys: list,
         });
-        console.log(list);
       }
     };
     if (importationId && importationId != "new") {
