@@ -32,7 +32,7 @@ export default ({ importations, deleteImportation, edit }) => {
             } = importation;
             return (
               <tr key={_id}>
-                <td>{departure_date}</td>
+                <td>{departure_date.split("T")[0]}</td>
                 <td>{state}</td>
                 <td>{value_dollars.toFixed(2)} $ </td>
                 <td>{shipping_estimated_kg.toFixed(2)} Kg</td>
