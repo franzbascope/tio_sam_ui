@@ -6,7 +6,7 @@ export default ({
   handleChange,
   validated,
   handleSubmit,
-  shipmentStates,
+  storages,
   form,
   buys,
   addBuy,
@@ -17,17 +17,17 @@ export default ({
     });
   };
 
-  const getShipmentStateOptions = () => {
-    return shipmentStates.map((state) => {
+  const getStorageStateOptions = () => {
+    return storages.map((storage) => {
       return (
-        <option key={state} value={state}>
-          {state}
+        <option key={storage._id} value={storage._id}>
+          {storage.name}
         </option>
       );
     });
   };
 
-  const { state, _id, arrival_date, departure_date, shipping_real_kg } = form;
+  const { _id, arrival_date, departure_date, shipping_real_kg } = form;
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -72,6 +72,19 @@ export default ({
               addBuy(event);
             }}
           />
+        </Form.Group>
+        <Form.Group md="4" as={Col} controlId="formGridEmail">
+          <Form.Label>Storage</Form.Label>
+          <Form.Control
+            onChange={handleChange}
+            value={form.storage}
+            name="storage"
+            required
+            as="select"
+          >
+            <option value="">Select a storage</option>
+            {getStorageStateOptions()}
+          </Form.Control>
         </Form.Group>
       </Form.Row>
       <Button variant="primary" type="submit">
