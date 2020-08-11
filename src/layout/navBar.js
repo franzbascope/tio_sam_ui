@@ -16,6 +16,15 @@ export default () => {
         <Link to="/buys" className="nav-link">
           Buys
         </Link>
+        <Link to="/importations" className="nav-link">
+          Importations
+        </Link>
+        <Link to="/clients" className="nav-link">
+          Clients
+        </Link>
+        <Link to="/sells" className="nav-link">
+          Sells
+        </Link>
       </Nav>
       <Form inline>
         <Button

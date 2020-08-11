@@ -15,11 +15,14 @@ export default () => {
   const [companies, setCompanies] = useState([]);
   const [product, setProduct] = useState({
     name: "",
-    price_bs: "",
-    cost_dollars: "",
-    weight: "",
+    price_bs: 0,
+    price_wholesale_bs: 0,
+    cost_dollars: 0,
+    weight: 0,
     _id: null,
     company: "",
+    lot: "",
+    price_lot_bs: "",
   });
   const [globalValues] = useGlobal();
   const requestHandler = mainHandler();
@@ -94,7 +97,17 @@ export default () => {
     setProduct({ ...product, [name]: value });
   };
 
-  const { name, price_bs, cost_dollars, weight, _id, company } = product;
+  const {
+    name,
+    price_bs,
+    cost_dollars,
+    weight,
+    _id,
+    company,
+    price_wholesale_bs,
+    lot,
+    price_lot_bs,
+  } = product;
 
   const getCompanyOptions = () => {
     return companies.map((mapCompany) => {
@@ -170,7 +183,39 @@ export default () => {
                     onChange={handleChange}
                     name="price_bs"
                     required
-                    type="text"
+                    type="number"
+                  />
+                </Form.Group>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Price Wholesale Bs</Form.Label>
+                  <Form.Control
+                    value={price_wholesale_bs}
+                    onChange={handleChange}
+                    name="price_wholesale_bs"
+                    required
+                    type="number"
+                  />
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Price Lot BS</Form.Label>
+                  <Form.Control
+                    value={price_lot_bs}
+                    onChange={handleChange}
+                    name="price_lot_bs"
+                    required
+                    type="number"
+                  />
+                </Form.Group>
+                <Form.Group md="4" as={Col} controlId="formGridEmail">
+                  <Form.Label>Lot (Items per box)</Form.Label>
+                  <Form.Control
+                    value={lot}
+                    onChange={handleChange}
+                    name="lot"
+                    required
+                    type="number"
                   />
                 </Form.Group>
               </Form.Row>

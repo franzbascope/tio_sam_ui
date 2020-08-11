@@ -5,26 +5,22 @@ import {
   Route,
   useRouteMatch,
 } from "react-router-dom";
-import NewProduct from "../pages/products/new";
-import Products from "../pages/products";
-import ProductDetail from "../pages/products/detail";
+import NewClient from "../pages/clients/new";
+import Clients from "../pages/clients";
 
 export default () => {
   let { url } = useRouteMatch();
 
   return (
     <Switch>
-      <Route path={`${url}/detail/:id`}>
-        <ProductDetail />
-      </Route>
       <Route path={`${url}/:id`}>
-        <NewProduct />
+        <NewClient />
       </Route>
       <Route path={`${url}/new`}>
-        <NewProduct />
+        <NewClient />
       </Route>
       <Route path={`/`}>
-        <Products />
+        <Clients />
       </Route>
     </Switch>
   );
