@@ -6,3 +6,4 @@ export const companyUrl = "companies";
 export const importationUrl = "importations";
 export const clientUrl = "clients";
 export const sellUrl = "sells";
+export const storagesUrl = "storages";

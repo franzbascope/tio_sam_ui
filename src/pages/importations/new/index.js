@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import BreadCrumbs from "../../../shared/breadCrumbs";
 import Loader from "../../../shared/loader";
 import * as Methods from "../../../shared/methods";
-import { importationUrl, buysUrl } from "../../../shared/urls";
+import { importationUrl, buysUrl, storagesUrl } from "../../../shared/urls";
 import mainHandler from "../../../shared/requestHandler";
 import { useGlobal } from "reactn";
 import Messages from "../../../shared/messages";
@@ -14,6 +14,7 @@ import moment from "moment";
 export default () => {
   const [validated, setValidated] = useState(false);
   const [allBuys, setAllBuys] = useState([]);
+  const [storages, setStorages] = useState([]);
   const [importation, setImportation] = useState({
     state: "",
     arrival_date: "",
@@ -21,6 +22,7 @@ export default () => {
     shipping_real_kg: 0.0,
     _id: null,
     buys: [],
+    storage:""
   });
 
   const [globalValues] = useGlobal();
@@ -84,6 +86,11 @@ export default () => {
       if (response) setAllBuys(response.data);
     };
 
+    const getStorages = async () => {
+      let response = await requestHandler(Methods.GET, storagesUrl);
+      if (response) setStorages(response.data);
+    }
+
     const getImportation = async () => {
       let response = await requestHandler(
         Methods.EDIT,
@@ -110,11 +117,12 @@ export default () => {
       getImportation();
     }
     getBuys();
+    getStorages();
   }, []);
 
   // some comment over here
 
-  const shipmentStates = ["USA", "TRANSIT", "BO"];
+  
 
   return (
     <React.Fragment>
@@ -126,7 +134,7 @@ export default () => {
         ) : (
           <Card.Body>
             <Form
-              shipmentStates={shipmentStates}
+              storages={storages}
               deleteProduct={(productId) => {
                 setImportation({
                   ...importation,
