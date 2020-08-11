@@ -13,7 +13,7 @@ export default ({
 }) => {
   const getBuyOptions = () => {
     return buys.map((buy) => {
-      return { label: buy.name, value: JSON.stringify(buy) };
+      return { label: buy.name, value: buy._id };
     });
   };
 
