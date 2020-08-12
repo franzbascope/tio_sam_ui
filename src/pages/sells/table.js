@@ -21,7 +21,7 @@ export default ({ sells, loading, edit, deletes, detail }) => {
         {sells.map((sell) => {
           const { client, created_at, delivery_cost, total, _id } = sell;
           return (
-            <tr>
+            <tr key={_id} >
               <td>{client.name}</td>
               <td>{created_at}</td>
               <td>{delivery_cost}</td>
