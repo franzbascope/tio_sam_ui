@@ -24,7 +24,7 @@ export default ({ importations, deleteImportation, edit }) => {
             const {
               _id,
               departure_date,
-              state,
+              storage,
               value_dollars,
               shipping_real_kg,
               shipping_cost_dollars,
@@ -33,7 +33,7 @@ export default ({ importations, deleteImportation, edit }) => {
             return (
               <tr key={_id}>
                 <td>{departure_date.split("T")[0]}</td>
-                <td>{state}</td>
+                <td>{storage.name}</td>
                 <td>{value_dollars.toFixed(2)} $ </td>
                 <td>{shipping_estimated_kg.toFixed(2)} Kg</td>
                 <td>{shipping_real_kg.toFixed(2)} Kg</td>

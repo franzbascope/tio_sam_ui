@@ -77,7 +77,7 @@ export default ({
           <Form.Label>Storage</Form.Label>
           <Form.Control
             onChange={handleChange}
-            value={form.storage}
+            value={form.storage._id}
             name="storage"
             required
             as="select"
