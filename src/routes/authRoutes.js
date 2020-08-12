@@ -9,6 +9,7 @@ import AppLayout from "../layout/index";
 import Sells from "../routes/sells";
 import BuysRoute from "./buys";
 import ImportationsRoute from "./importations";
+import StoragesRoute from "./storages";
 import ProductsRoute from "./products";
 import ClientsRoute from "./clients";
 import NoMatch from "../pages/notFound";
@@ -33,6 +34,9 @@ export default () => {
         </Route>
         <Route path="/importations">
           <ImportationsRoute />
+        </Route>
+        <Route path="/storages">
+          <StoragesRoute />
         </Route>
         <Route path="/" exact={true}>
           <h1>Welcome to Tio Sam Importaciones</h1>
