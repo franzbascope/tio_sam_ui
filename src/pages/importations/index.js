@@ -43,6 +43,10 @@ export default () => {
   const edit = (id) => {
     history.push(`/importations/${id}`);
   };
+  
+  const details = (id) => {
+    history.push(`/importations/detail/${id}`);
+  };
 
   useEffect(() => {
     async function fetchImportations() {
@@ -68,6 +72,9 @@ export default () => {
           }}
           edit={(id) => {
             edit(id);
+          }}
+          importationDetails={(id)=>{
+            details(id);
           }}
         />
       )}

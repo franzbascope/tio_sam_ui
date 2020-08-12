@@ -6,6 +6,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import New from "../pages/importations/new/index";
+import ImportationDetails from "../pages/importations/detail/index";
 import Index from "../pages/importations";
 
 export default () => {
@@ -13,6 +14,9 @@ export default () => {
 
   return (
     <Switch>
+      <Route path={`${url}/detail/:id`}>
+        <ImportationDetails />
+      </Route>
       <Route path={`${url}/:id`}>
         <New />
       </Route>

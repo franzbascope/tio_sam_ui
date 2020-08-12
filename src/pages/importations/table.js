@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Button, Alert } from "react-bootstrap";
 
-export default ({ importations, deleteImportation, edit }) => {
+export default ({ importations, deleteImportation, edit, importationDetails }) => {
   if (importations.length < 1) {
     return <Alert variant="warning">No records added, Add one !!!</Alert>;
   }
@@ -39,6 +39,15 @@ export default ({ importations, deleteImportation, edit }) => {
                 <td>{shipping_real_kg.toFixed(2)} Kg</td>
                 <td>{shipping_cost_dollars.toFixed(2)} $</td>
                 <td>
+                  <Button
+                    variant="primary"
+                    className="ml-3 mr-3"
+                    onClick={() => {
+                      importationDetails(_id);
+                    }}
+                  >
+                    Details
+                  </Button>
                   <Button
                     variant="success"
                     className="ml-3 mr-3"
