@@ -63,7 +63,7 @@ export default () => {
         loading={globalValues.loading}
         sells={inputValues.sells}
         detail={(id) => {
-          //detail(id);
+          detail(id);
         }}
         edit={(id) => {
           edit(id);
