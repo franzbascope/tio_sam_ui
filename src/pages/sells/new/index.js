@@ -74,7 +74,6 @@ export default () => {
     const getSell = async () => {
       let response = await requestHandler(Methods.EDIT, sellUrl, null, sellId);
       if (response) setSell(response.data);
-      console.log(response.data);
     };
     const getClients = async () => {
       let response = await requestHandler(Methods.GET, clientUrl);
