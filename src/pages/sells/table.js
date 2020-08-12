@@ -11,10 +11,9 @@ export default ({ sells, loading, edit, deletes, detail }) => {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Items / Lot</th>
-          <th>Cost Dollars</th>
-          <th>Total Cost Bs</th>
-          <th>Price Unit Bs</th>
+          <th>Date created</th>
+          <th>Delivery Cost</th>
+          <th>Total</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -29,6 +28,7 @@ export default ({ sells, loading, edit, deletes, detail }) => {
               <td>{total}</td>
               <td>
                 <Button
+                  className="ml-3 mr-3"
                   variant="primary"
                   onClick={() => {
                     detail(_id);
@@ -37,6 +37,7 @@ export default ({ sells, loading, edit, deletes, detail }) => {
                   Details
                 </Button>
                 <Button
+                  className="mr-3"
                   variant="success"
                   onClick={() => {
                     edit(_id);
