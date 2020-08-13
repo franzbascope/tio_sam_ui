@@ -5,6 +5,7 @@ import Messages from "../../shared/messages";
 import Table from "./table";
 import mainHandler from "../../shared/requestHandler";
 import Loader from "../../shared/loader";
+import Pagination from "../../shared/paginate";
 import * as Methods from "../../shared/methods";
 import { productsUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
@@ -16,7 +17,7 @@ export default () => {
   });
 
   const requestHandler = mainHandler();
-  const [globalValues] = useGlobal();
+  const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
   useEffect(() => {
@@ -79,6 +80,7 @@ export default () => {
       ) : (
         <Alert variant="warning">No products registered, Add one !!!</Alert>
       )}
+      <Pagination totalPage={10} currentPage={5} />
     </React.Fragment>
   );
 };
