@@ -20,7 +20,7 @@ export default () => {
   useEffect(() => {
     async function fetchSells() {
       let res = await requestHandler(Methods.GET, sellUrl);
-      if (res) setValues({ ...inputValues, products: res.data });
+      if (res) setValues({ ...inputValues, sells: res.data });
     }
     fetchSells();
   }, []);
@@ -68,7 +68,7 @@ export default () => {
         edit={(id) => {
           edit(id);
         }}
-        deleteProduct={(id) => {
+        deletes={(id) => {
           deletes(id);
         }}
       />
