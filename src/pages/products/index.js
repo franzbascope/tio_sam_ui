@@ -20,12 +20,19 @@ export default () => {
   const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
+  const fetchProducts = async (page) => {
+    if (!page) page = 1;
+    let res = await requestHandler(Methods.PAGE, productsUrl, null, page);
+    if (res) setValues({ ...inputValues, products: res.data.response });
+    setGlobalValues({
+      ...globalValues,
+      totalPages: res.data.totalPages,
+      currentPage: page,
+    });
+  };
+
   useEffect(() => {
-    async function fetchProducts() {
-      let res = await requestHandler(Methods.GET, productsUrl);
-      if (res) setValues({ ...inputValues, products: res.data });
-    }
-    fetchProducts();
+    fetchProducts(null);
   }, []);
 
   const deleteProduct = async (id) => {
@@ -65,22 +72,24 @@ export default () => {
       {globalValues.loading ? (
         <Loader />
       ) : inputValues.products.length > 0 ? (
-        <Table
-          products={inputValues.products}
-          productsDetail={(id) => {
-            productsDetail(id);
-          }}
-          editProduct={(id) => {
-            editProduct(id);
-          }}
-          deleteProduct={(id) => {
-            deleteProduct(id);
-          }}
-        />
+        <React.Fragment>
+          <Table
+            products={inputValues.products}
+            productsDetail={(id) => {
+              productsDetail(id);
+            }}
+            editProduct={(id) => {
+              editProduct(id);
+            }}
+            deleteProduct={(id) => {
+              deleteProduct(id);
+            }}
+          />
+          <Pagination totalPages={globalValues.totalPages} fetchData={fetchProducts}/>
+        </React.Fragment>
       ) : (
         <Alert variant="warning">No products registered, Add one !!!</Alert>
       )}
-      <Pagination totalPage={10} currentPage={5} />
     </React.Fragment>
   );
 };

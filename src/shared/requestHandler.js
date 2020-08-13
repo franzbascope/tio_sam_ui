@@ -34,6 +34,9 @@ export default () => {
         case "DELETE":
           res = await axios.delete(`${API_URL}/${url}/${id}`, config);
           break;
+        case "PAGE":
+          res = await axios.get(`${API_URL}/${url}/page/${id}`, config);
+          break;
       }
     } catch (err) {
       debugger;
