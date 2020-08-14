@@ -1,17 +1,12 @@
 import React, { useGlobal, useEffect } from "reactn";
 import { Pagination } from "react-bootstrap";
 
-export default ({totalPages, fetchData}) => {
+export default ({fetchData}) => {
   const [globalValues, setGlobalValues] = useGlobal();
   let active = globalValues.currentPage;
   let items = [];
-
-  useEffect(() => {
-   //setGlobalValues({ ...globalValues, totalPages: 5, currentPage: 1 });
-   
-  }, []);
   
-  for (let number = 1; number <= totalPages; number++) {
+  for (let number = 1; number <= globalValues.totalPages; number++) {
     items.push(
       <Pagination.Item
         onClick={() =>{

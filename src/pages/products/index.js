@@ -85,7 +85,7 @@ export default () => {
               deleteProduct(id);
             }}
           />
-          <Pagination totalPages={globalValues.totalPages} fetchData={fetchProducts}/>
+          <Pagination fetchData={fetchProducts}/>
         </React.Fragment>
       ) : (
         <Alert variant="warning">No products registered, Add one !!!</Alert>
