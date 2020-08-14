@@ -30,7 +30,7 @@ export default () => {
   }
   const fetchSells = async(page) => {
     let res = await fetchData(page, sellUrl);
-    if (res) setValues({ ...inputValues, products: res.data.response });
+    if (res) setValues({ ...inputValues, sells: res.data.response });
   }
 
   useEffect(() => {
