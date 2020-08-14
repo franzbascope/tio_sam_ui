@@ -4,18 +4,18 @@ import { Link } from "react-router-dom";
 import { useGlobal } from "reactn";
 import Messages from "../../shared/messages";
 import Loader from "../../shared/loader";
-import Table from './table';
+import Table from "./table";
 import mainHandler from "../../shared/requestHandler";
 import { buysUrl } from "../../shared/urls";
 import * as Methods from "../../shared/methods";
 import { useHistory } from "react-router-dom";
+import Pagination from "../../shared/paginate";
 
 export default () => {
-
   const [inputValues, setValues] = useState({
     buys: [],
   });
-  const [globalValues] = useGlobal();
+  const [globalValues,setGlobalValues] = useGlobal();
   const requestHandler = mainHandler();
   const history = useHistory();
 
@@ -43,12 +43,24 @@ export default () => {
     history.push(`/buys/${id}`);
   };
 
+  const fetchData = async (page, url) =>{
+    if (!page) page = 1;
+    let res = await requestHandler(Methods.PAGE, url, null, page);
+    setGlobalValues({
+      ...globalValues,
+      totalPages: res.data.totalPages,
+      currentPage: page,
+    });
+    return res;
+  }
+
+  const fetchBuys = async (page) =>{
+    let res = await fetchData(page, buysUrl);
+    if (res) setValues({ ...inputValues, buys: res.data.response });
+  }
   useEffect(() => {
-    async function fetchProducts() {
-      let res = await requestHandler(Methods.GET, buysUrl);
-      if (res) setValues({ ...inputValues, buys: res.data });
-    }
-    fetchProducts();
+    
+    fetchBuys();
   }, []);
   return (
     <React.Fragment>
@@ -57,17 +69,22 @@ export default () => {
         New Buy
       </Link>
       <Messages />
-      {globalValues.loading ?
-        <Loader /> : 
-        <Table 
-          buys={inputValues.buys} 
-          deleteBuys={(id) => { 
-            deleteBuys(id); 
-          }}
-          editBuys={(id) =>{
-            editBuys(id);
-          }}
-        />}
+      {globalValues.loading ? (
+        <Loader />
+      ) : (
+        <React.Fragment>
+          <Table
+            buys={inputValues.buys}
+            deleteBuys={(id) => {
+              deleteBuys(id);
+            }}
+            editBuys={(id) => {
+              editBuys(id);
+            }}
+          />
+          <Pagination fetchData={fetchBuys} />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

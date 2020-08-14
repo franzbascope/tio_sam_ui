@@ -9,12 +9,13 @@ import mainHandler from "../../shared/requestHandler";
 import { importationUrl } from "../../shared/urls";
 import * as Methods from "../../shared/methods";
 import { useHistory } from "react-router-dom";
+import Pagination from "../../shared/paginate";
 
 export default () => {
   const [inputValues, setValues] = useState({
     importations: [],
   });
-  const [globalValues] = useGlobal();
+  const [globalValues,setGlobalValues] = useGlobal();
   const requestHandler = mainHandler();
   const history = useHistory();
 
@@ -48,11 +49,21 @@ export default () => {
     history.push(`/importations/detail/${id}`);
   };
 
+  const fetchData = async (page, url) =>{
+    if (!page) page = 1;
+    let res = await requestHandler(Methods.PAGE, url, null, page);
+    setGlobalValues({
+      ...globalValues,
+      totalPages: res.data.totalPages,
+      currentPage: page,
+    });
+    return res;
+  }
+  const fetchImportations = async(page) => {
+    let res = await fetchData(page, importationUrl);
+    if (res) setValues({ ...inputValues, importations: res.data.response });
+  }
   useEffect(() => {
-    async function fetchImportations() {
-      let res = await requestHandler(Methods.GET, importationUrl);
-      if (res) setValues({ ...inputValues, importations: res.data });
-    }
     fetchImportations();
   }, []);
   return (
@@ -65,7 +76,8 @@ export default () => {
       {globalValues.loading ? (
         <Loader />
       ) : (
-        <Table
+        <React.Fragment>
+          <Table
           importations={inputValues.importations}
           deleteImportation={(id) => {
             deleteImportation(id);
@@ -77,6 +89,8 @@ export default () => {
             details(id);
           }}
         />
+        <Pagination fetchData={fetchImportations} />
+        </React.Fragment>
       )}
     </React.Fragment>
   );
