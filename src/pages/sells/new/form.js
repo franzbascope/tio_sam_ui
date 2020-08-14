@@ -12,6 +12,7 @@ export default ({
   showModal,
   deleteDetail,
   save,
+  update
 }) => {
   const [validated, setValidated] = useState(false);
 
@@ -22,7 +23,8 @@ export default ({
       event.stopPropagation();
       setValidated(true);
     } else {
-      save();
+      if(sell._id) update(sell._id);
+      else save();
     }
   };
 
@@ -47,7 +49,7 @@ export default ({
                 <Form.Label>Client</Form.Label>
                 <Form.Control
                   onChange={handleChange}
-                  value={client}
+                  value={client._id}
                   name="client"
                   required
                   as="select"

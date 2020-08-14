@@ -44,6 +44,10 @@ export default () => {
   const edit = (id) => {
     history.push(`/importations/${id}`);
   };
+  
+  const details = (id) => {
+    history.push(`/importations/detail/${id}`);
+  };
 
   const fetchData = async (page, url) =>{
     if (!page) page = 1;
@@ -80,6 +84,9 @@ export default () => {
           }}
           edit={(id) => {
             edit(id);
+          }}
+          importationDetails={(id)=>{
+            details(id);
           }}
         />
         <Pagination fetchData={fetchImportations} />

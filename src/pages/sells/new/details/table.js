@@ -24,7 +24,7 @@ export default ({ details, deletes }) => {
           </thead>
           <tbody>
             {details.map((detail, key) => {
-              const { product, price, quantity, id, subtotal } = detail;
+              const { product, price, quantity, _id, subtotal } = detail;
               return (
                 <tr key={key}>
                   <td>{product.name}</td>
@@ -35,7 +35,8 @@ export default ({ details, deletes }) => {
                     <Button
                       variant="danger"
                       onClick={() => {
-                        deletes(id);
+                        console.log(_id);
+                        deletes(_id);
                       }}
                     >
                       Delete
