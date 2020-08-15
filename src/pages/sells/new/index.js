@@ -76,12 +76,12 @@ export default () => {
       if (response) setSell(response.data);
     };
     const getClients = async () => {
-      let response = await requestHandler(Methods.GET, clientUrl);
-      if (response) setClients(response.data);
+      let response = await requestHandler(Methods.PAGE, clientUrl, null, 1);
+      if (response) setClients(response.data.response);
     };
     const getProducts = async () => {
-      let response = await requestHandler(Methods.GET, productsUrl);
-      if (response) setProducts(response.data);
+      let response = await requestHandler(Methods.PAGE, productsUrl, null, 1);
+      if (response) setProducts(response.data.response);
     };
     getClients();
     getProducts();

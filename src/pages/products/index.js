@@ -21,14 +21,8 @@ export default () => {
   const history = useHistory();
 
   const fetchProducts = async (page) => {
-    if (!page) page = 1;
     let res = await requestHandler(Methods.PAGE, productsUrl, null, page);
     if (res) setValues({ ...inputValues, products: res.data.response });
-    setGlobalValues({
-      ...globalValues,
-      totalPages: res.data.totalPages,
-      currentPage: page,
-    });
   };
 
   useEffect(() => {

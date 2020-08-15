@@ -49,18 +49,9 @@ export default () => {
     history.push(`/importations/detail/${id}`);
   };
 
-  const fetchData = async (page, url) =>{
-    if (!page) page = 1;
-    let res = await requestHandler(Methods.PAGE, url, null, page);
-    setGlobalValues({
-      ...globalValues,
-      totalPages: res.data.totalPages,
-      currentPage: page,
-    });
-    return res;
-  }
+ 
   const fetchImportations = async(page) => {
-    let res = await fetchData(page, importationUrl);
+    let res = await requestHandler(Methods.PAGE, importationUrl, null, page);
     if (res) setValues({ ...inputValues, importations: res.data.response });
   }
   useEffect(() => {

@@ -18,19 +18,9 @@ export default () => {
   const [globalValues,setGlobalValues] = useGlobal();
   const history = useHistory();
 
-  const fetchData = async (page, url) =>{
-    if (!page) page = 1;
-    let res = await requestHandler(Methods.PAGE, url, null, page);
-    setGlobalValues({
-      ...globalValues,
-      totalPages: res.data.totalPages,
-      currentPage: page,
-    });
-    return res;
-  }
   const fetchSells = async(page) => {
-    let res = await fetchData(page, sellUrl);
-    if (res) setValues({ ...inputValues, products: res.data.response });
+    let res = await requestHandler(Methods.PAGE, sellUrl, null, page);
+    if (res) setValues({ ...inputValues, sells: res.data.response });
   }
 
   useEffect(() => {

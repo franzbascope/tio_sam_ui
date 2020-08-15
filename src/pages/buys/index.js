@@ -43,19 +43,9 @@ export default () => {
     history.push(`/buys/${id}`);
   };
 
-  const fetchData = async (page, url) =>{
-    if (!page) page = 1;
-    let res = await requestHandler(Methods.PAGE, url, null, page);
-    setGlobalValues({
-      ...globalValues,
-      totalPages: res.data.totalPages,
-      currentPage: page,
-    });
-    return res;
-  }
-
+  
   const fetchBuys = async (page) =>{
-    let res = await fetchData(page, buysUrl);
+    let res = await requestHandler(Methods.PAGE, buysUrl, null, page);
     if (res) setValues({ ...inputValues, buys: res.data.response });
   }
   useEffect(() => {
