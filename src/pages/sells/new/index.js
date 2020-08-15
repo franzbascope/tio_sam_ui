@@ -39,6 +39,9 @@ export default () => {
     let clientObject = getClientById(sell.client, clients);
     let request = sell;
     request.client = clientObject;
+    request.details.map(detail => {
+      delete detail._id;
+    })
     let response = await requestHandler(
       Methods.POST,
       sellUrl,
@@ -51,6 +54,9 @@ export default () => {
     }
   };
   const update = async (request) => {
+    request.details.map(detail => {
+      if(typeof detail._id == "number") delete detail._id;
+    });
     let response = await requestHandler(
       Methods.PUT,
       sellUrl,
@@ -59,7 +65,7 @@ export default () => {
       "Sell updated successfully"
     );
     if (response) {
-      history.push("/products");
+      history.push("/sells");
     }
   };
   let { id: sellId } = useParams();
@@ -70,12 +76,12 @@ export default () => {
       if (response) setSell(response.data);
     };
     const getClients = async () => {
-      let response = await requestHandler(Methods.GET, clientUrl);
-      if (response) setClients(response.data);
+      let response = await requestHandler(Methods.PAGE, clientUrl, null, 1);
+      if (response) setClients(response.data.response);
     };
     const getProducts = async () => {
-      let response = await requestHandler(Methods.GET, productsUrl);
-      if (response) setProducts(response.data);
+      let response = await requestHandler(Methods.PAGE, productsUrl, null, 1);
+      if (response) setProducts(response.data.response);
     };
     getClients();
     getProducts();
@@ -101,18 +107,18 @@ export default () => {
         save={(sell) => {
           save(sell);
         }}
-        update={(sell) => {
+        update={() => {
           update(sell);
         }}
         handleChange={(e) => {
           handleChange(e);
         }}
         deleteDetail={(id) => {
-          if (window.confirm()) {
+          if (window.confirm("Are you sure you want to delete this is item?")) {
             setSell({
               ...sell,
               details: sell.details.filter((detail) => {
-                return detail.id !== id;
+                return detail._id !== id;
               }),
             });
           }
@@ -125,7 +131,7 @@ export default () => {
         products={products}
         add={(detail) => {
           detail.product = JSON.parse(detail.product);
-          detail.id = new Date().getUTCMilliseconds();
+          detail._id = new Date().getUTCMilliseconds();
           detail.subtotal = detail.price * detail.quantity;
           setSell({
             ...sell,

@@ -8,20 +8,22 @@ import { sellUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Pagination from "../../shared/paginate";
 export default () => {
   const [inputValues, setValues] = useState({
     sells: [],
   });
 
   const requestHandler = mainHandler();
-  const [globalValues] = useGlobal();
+  const [globalValues,setGlobalValues] = useGlobal();
   const history = useHistory();
 
+  const fetchSells = async(page) => {
+    let res = await requestHandler(Methods.PAGE, sellUrl, null, page);
+    if (res) setValues({ ...inputValues, sells: res.data.response });
+  }
+
   useEffect(() => {
-    async function fetchSells() {
-      let res = await requestHandler(Methods.GET, sellUrl);
-      if (res) setValues({ ...inputValues, products: res.data });
-    }
     fetchSells();
   }, []);
 
@@ -59,19 +61,22 @@ export default () => {
         New Sell
       </Link>
       <Messages />
-      <Table
-        loading={globalValues.loading}
-        sells={inputValues.sells}
-        detail={(id) => {
-          detail(id);
-        }}
-        edit={(id) => {
-          edit(id);
-        }}
-        deleteProduct={(id) => {
-          deletes(id);
-        }}
-      />
+      <React.Fragment>
+        <Table
+          loading={globalValues.loading}
+          sells={inputValues.sells}
+          detail={(id) => {
+            detail(id);
+          }}
+          edit={(id) => {
+            edit(id);
+          }}
+          deleteProduct={(id) => {
+            deletes(id);
+          }}
+        />
+        <Pagination fetchData={fetchSells} />
+      </React.Fragment>
     </React.Fragment>
   );
 };

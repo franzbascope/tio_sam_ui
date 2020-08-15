@@ -34,6 +34,10 @@ export default () => {
         case "DELETE":
           res = await axios.delete(`${API_URL}/${url}/${id}`, config);
           break;
+        case "PAGE":
+          if (!id) id = 1;
+          res = await axios.get(`${API_URL}/${url}/page/${id}`, config);
+          break;
       }
     } catch (err) {
       debugger;
@@ -56,6 +60,13 @@ export default () => {
     setGlobalValues({ ...globalValues, loading: false });
     if (method != "GET") {
       setGlobalValues({ ...globalValues, success: message });
+    }
+    if( method == "PAGE"){
+      setGlobalValues({
+        ...globalValues,
+        totalPages: res.data.totalPages,
+        currentPage: id,
+      });
     }
     return res;
   };

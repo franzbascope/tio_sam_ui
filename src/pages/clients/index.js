@@ -10,20 +10,23 @@ import { clientUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Pagination from "../../shared/paginate";
 export default () => {
   const [inputValues, setValues] = useState({
     clients: [],
   });
 
   const requestHandler = mainHandler();
-  const [globalValues] = useGlobal();
+  const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
+  const fetchClients = async (page) =>{
+    let res = await requestHandler(Methods.PAGE, clientUrl, null, page);
+    if (res) setValues({ ...inputValues, clients: res.data.response });
+  }
+
   useEffect(() => {
-    async function fetchClients() {
-      let res = await requestHandler(Methods.GET, clientUrl);
-      if (res) setValues({ ...inputValues, clients: res.data });
-    }
+    
     fetchClients();
   }, []);
 
@@ -60,15 +63,18 @@ export default () => {
       {globalValues.loading ? (
         <Loader />
       ) : inputValues.clients.length > 0 ? (
-        <Table
-          clients={inputValues.clients}
-          editClient={(id) => {
-            editClient(id);
-          }}
-          deleteClient={(id) => {
-            deleteClient(id);
-          }}
-        />
+        <React.Fragment>
+          <Table
+            clients={inputValues.clients}
+            editClient={(id) => {
+              editClient(id);
+            }}
+            deleteClient={(id) => {
+              deleteClient(id);
+            }}
+          />
+          <Pagination fetchData={fetchClients}/>
+        </React.Fragment>
       ) : (
         <Alert variant="warning">No clients registered, Add one !!!</Alert>
       )}

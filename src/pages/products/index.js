@@ -5,6 +5,7 @@ import Messages from "../../shared/messages";
 import Table from "./table";
 import mainHandler from "../../shared/requestHandler";
 import Loader from "../../shared/loader";
+import Pagination from "../../shared/paginate";
 import * as Methods from "../../shared/methods";
 import { productsUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
@@ -18,15 +19,16 @@ export default () => {
   });
 
   const requestHandler = mainHandler();
-  const [globalValues] = useGlobal();
+  const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
+  const fetchProducts = async (page) => {
+    let res = await requestHandler(Methods.PAGE, productsUrl, null, page);
+    if (res) setValues({ ...inputValues, products: res.data.response });
+  };
+
   useEffect(() => {
-    async function fetchProducts() {
-      let res = await requestHandler(Methods.GET, productsUrl);
-      if (res) setValues({ ...inputValues, products: res.data });
-    }
-    fetchProducts();
+    fetchProducts(null);
   }, []);
 
   const deleteProduct = async (id) => {
@@ -74,18 +76,21 @@ export default () => {
       {globalValues.loading ? (
         <Loader />
       ) : inputValues.products.length > 0 ? (
-        <Table
-          products={inputValues.products}
-          productsDetail={(id) => {
-            productsDetail(id);
-          }}
-          editProduct={(id) => {
-            editProduct(id);
-          }}
-          deleteProduct={(id) => {
-            deleteProduct(id);
-          }}
-        />
+        <React.Fragment>
+          <Table
+            products={inputValues.products}
+            productsDetail={(id) => {
+              productsDetail(id);
+            }}
+            editProduct={(id) => {
+              editProduct(id);
+            }}
+            deleteProduct={(id) => {
+              deleteProduct(id);
+            }}
+          />
+          <Pagination fetchData={fetchProducts}/>
+        </React.Fragment>
       ) : (
         <Alert variant="warning">No products registered, Add one !!!</Alert>
       )}
