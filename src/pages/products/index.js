@@ -10,6 +10,8 @@ import { productsUrl } from "../../shared/urls";
 import BreadCrumbs from "../../shared/breadCrumbs";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Search from "../../shared/search";
+import { filter } from "./filters";
 export default () => {
   const [inputValues, setValues] = useState({
     products: [],
@@ -60,6 +62,14 @@ export default () => {
       <Link className="mt-3 mb-3 btn btn-primary" to="/products/new">
         New Product
       </Link>
+      <Search
+        fields={filter}
+        submit={(query) => {
+          alert(query);
+          console.log(query);
+          // call api here
+        }}
+      />
       <Messages />
       {globalValues.loading ? (
         <Loader />
