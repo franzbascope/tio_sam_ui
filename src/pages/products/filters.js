@@ -6,7 +6,7 @@ export const filter = [
   },
   {
     label: "Total de la compra",
-    name: "amount",
+    name: "price_bs",
     type: "number",
   },
   {

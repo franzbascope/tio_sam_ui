@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Form, Col, Button, InputGroup } from "react-bootstrap";
 import { useGlobal } from "reactn";
-import { filter } from "../pages/products/filters";
 
 export default ({ fields, submit }) => {
-  const [globalValues, setGlobalValues] = useGlobal();
   const [filters, setFilter] = useState();
-  
+  const [globalValues, setGlobalValues] = useGlobal();
   const operators = ["<", ">", "="]
  
   const handleChange = (event) => {
@@ -27,6 +25,7 @@ export default ({ fields, submit }) => {
   }
 
   useEffect(() => {
+    setGlobalValues({...globalValues, query: ""})
     setFilters();
   }, []);
 
@@ -38,11 +37,13 @@ export default ({ fields, submit }) => {
       let element = filters[key];
       if (element.operator && element.value) {
         query += `${sep}${key}=${element.operator}${element.value}`;
+        sep = "&"
       } else if (element.value) {
         query += `${sep}${key}==/${element.value}/`;
+        sep = "&"
       }
-      sep = "&"
     }
+    setGlobalValues({...globalValues, query: query})
     submit(query);
   }
 

@@ -22,8 +22,8 @@ export default () => {
   const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
-  const fetchProducts = async (page) => {
-    let res = await requestHandler(Methods.PAGE, productsUrl, null, page);
+  const fetchProducts = async (page, query="") => {
+    let res = await requestHandler(Methods.PAGE, productsUrl, null, page,"",query);
     if (res) setValues({ ...inputValues, products: res.data.response });
   };
 
@@ -67,8 +67,9 @@ export default () => {
       </Link>
       <Search
         fields={filter}
-        submit={(filters) => {
-          console.log(filters);
+        submit={(query) => {
+            setGlobalValues({...globalValues, currentPage: 1})
+            fetchProducts(globalValues.currentPage, query);
         }}
       />
       <Messages />
