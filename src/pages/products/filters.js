@@ -13,4 +13,9 @@ export const filter = [
     name: "arrival_date",
     type: "date",
   },
+  {
+    label: "Weight",
+    name: "weight",
+    type: "number",
+  },
 ];

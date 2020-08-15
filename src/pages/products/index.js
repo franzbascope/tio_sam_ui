@@ -58,6 +58,7 @@ export default () => {
     history.push(`/products/detail/${id}`);
   };
 
+
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -66,10 +67,8 @@ export default () => {
       </Link>
       <Search
         fields={filter}
-        submit={(query) => {
-          alert(query);
-          console.log(query);
-          // call api here
+        submit={(filters) => {
+          console.log(filters);
         }}
       />
       <Messages />
