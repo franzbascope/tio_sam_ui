@@ -14,7 +14,7 @@ export default () => {
     };
   }
   const history = useHistory();
-  const requestHandler = async (method, url, data, id = null, message = "") => {
+  const requestHandler = async (method, url, data, id = null, message = "", query="") => {
     let res = null;
     setGlobalValues({ ...globalValues, loading: true });
     try {
@@ -36,7 +36,7 @@ export default () => {
           break;
         case "PAGE":
           if (!id) id = 1;
-          res = await axios.get(`${API_URL}/${url}/page/${id}`, config);
+          res = await axios.get(`${API_URL}/${url}/page/${id}?${query}`, config);
           break;
       }
     } catch (err) {

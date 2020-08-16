@@ -22,8 +22,8 @@ export default () => {
   const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
-  const fetchProducts = async (page) => {
-    let res = await requestHandler(Methods.PAGE, productsUrl, null, page);
+  const fetchProducts = async (page, query="") => {
+    let res = await requestHandler(Methods.PAGE, productsUrl, null, page,"",query);
     if (res) setValues({ ...inputValues, products: res.data.response });
   };
 
@@ -58,6 +58,7 @@ export default () => {
     history.push(`/products/detail/${id}`);
   };
 
+
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -67,9 +68,8 @@ export default () => {
       <Search
         fields={filter}
         submit={(query) => {
-          alert(query);
-          console.log(query);
-          // call api here
+            setGlobalValues({...globalValues, currentPage: 1})
+            fetchProducts(globalValues.currentPage, query);
         }}
       />
       <Messages />

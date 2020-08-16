@@ -6,11 +6,16 @@ export const filter = [
   },
   {
     label: "Total de la compra",
-    name: "amount",
+    name: "price_bs",
     type: "number",
   },
   {
     name: "arrival_date",
     type: "date",
+  },
+  {
+    label: "Weight",
+    name: "weight",
+    type: "number",
   },
 ];

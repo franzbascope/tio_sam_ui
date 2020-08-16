@@ -11,7 +11,7 @@ export default ({fetchData}) => {
       <Pagination.Item
         onClick={() =>{
             setGlobalValues({currentPage: number});
-            fetchData(number);
+            fetchData(number, globalValues.query);
         }}
         key={number}
         active={number === active}
