@@ -37,7 +37,6 @@ export default () => {
         case "PAGE":
           if (!id) id = 1;
           res = await axios.get(`${API_URL}/${url}/page/${id}?${query}`, config);
-          console.log(`${API_URL}/${url}/page/${id}?${query}`);
           break;
       }
     } catch (err) {
