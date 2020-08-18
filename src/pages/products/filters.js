@@ -10,6 +10,7 @@ export const filter = [
     type: "number",
   },
   {
+    label: "Arrival Date",
     name: "arrival_date",
     type: "date",
   },
