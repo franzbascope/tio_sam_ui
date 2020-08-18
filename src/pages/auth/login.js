@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../shared/loader";
 
-
 //hello!
 export default () => {
   const [globalValues, setGlobalValues] = useGlobal();
@@ -38,9 +37,10 @@ export default () => {
 
   const loginUser = async (request) => {
     try {
+      const API_URL = mainUrl();
       setGlobalValues({ ...globalValues, loading: true });
       let res = await axios.post(
-        `${mainUrl}/${loginUrl}`,
+        `${API_URL}/${loginUrl}`,
         {},
         {
           auth: {

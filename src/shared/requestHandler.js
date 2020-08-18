@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useGlobal } from "reactn";
-import { mainUrl as API_URL } from "./urls";
+import { mainUrl } from "./urls";
 import { useHistory } from "react-router-dom";
 
 export default () => {
+  const API_URL = mainUrl();
   const [globalValues, setGlobalValues] = useGlobal();
   let session = sessionStorage.getItem("tioSamUser");
   let config = {};
@@ -14,7 +15,14 @@ export default () => {
     };
   }
   const history = useHistory();
-  const requestHandler = async (method, url, data, id = null, message = "", query="") => {
+  const requestHandler = async (
+    method,
+    url,
+    data,
+    id = null,
+    message = "",
+    query = ""
+  ) => {
     let res = null;
     setGlobalValues({ ...globalValues, loading: true });
     try {
@@ -36,7 +44,10 @@ export default () => {
           break;
         case "PAGE":
           if (!id) id = 1;
-          res = await axios.get(`${API_URL}/${url}/page/${id}?${query}`, config);
+          res = await axios.get(
+            `${API_URL}/${url}/page/${id}?${query}`,
+            config
+          );
           break;
       }
     } catch (err) {
@@ -61,7 +72,7 @@ export default () => {
     if (method != "GET") {
       setGlobalValues({ ...globalValues, success: message });
     }
-    if( method == "PAGE"){
+    if (method == "PAGE") {
       setGlobalValues({
         ...globalValues,
         totalPages: res.data.totalPages,
