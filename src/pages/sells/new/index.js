@@ -25,15 +25,27 @@ export default () => {
   const requestHandler = mainHandler();
   const history = useHistory();
 
+  const getClientById = (client_id, clients) => {
+    return clients.filter((client) => {
+      return client._id == client_id;
+    })[0];
+  };
+
   const save = async () => {
     if (sell.details.length < 1) {
       alert("Need to add at least one product");
       return;
     }
+    let clientObject = getClientById(sell.client, clients);
+    let request = sell;
+    request.client = clientObject;
+    request.details.map(detail => {
+      delete detail._id;
+    })
     let response = await requestHandler(
       Methods.POST,
       sellUrl,
-      sell,
+      request,
       null,
       "Sell saved successfully"
     );
@@ -42,6 +54,9 @@ export default () => {
     }
   };
   const update = async (request) => {
+    request.details.map(detail => {
+      if(typeof detail._id == "number") delete detail._id;
+    });
     let response = await requestHandler(
       Methods.PUT,
       sellUrl,
@@ -50,7 +65,7 @@ export default () => {
       "Sell updated successfully"
     );
     if (response) {
-      history.push("/products");
+      history.push("/sells");
     }
   };
   let { id: sellId } = useParams();
@@ -92,18 +107,18 @@ export default () => {
         save={(sell) => {
           save(sell);
         }}
-        update={(sell) => {
+        update={() => {
           update(sell);
         }}
         handleChange={(e) => {
           handleChange(e);
         }}
         deleteDetail={(id) => {
-          if (window.confirm()) {
+          if (window.confirm("Are you sure you want to delete this is item?")) {
             setSell({
               ...sell,
               details: sell.details.filter((detail) => {
-                return detail.id !== id;
+                return detail._id !== id;
               }),
             });
           }
@@ -116,7 +131,7 @@ export default () => {
         products={products}
         add={(detail) => {
           detail.product = JSON.parse(detail.product);
-          detail.id = new Date().getUTCMilliseconds();
+          detail._id = new Date().getUTCMilliseconds();
           detail.subtotal = detail.price * detail.quantity;
           setSell({
             ...sell,

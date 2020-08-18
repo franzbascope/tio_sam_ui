@@ -46,7 +46,7 @@ export default ({ products, save, show, hide }) => {
     }
   };
 
-  const { quantity, cost_dollars, product } = values.form;
+  const { quantity_lots, quantity_units, cost_dollars, product } = values.form;
   const getProductById = (productId) => {
     return products.filter((mapProduct) => {
       return mapProduct._id == productId;
@@ -59,6 +59,20 @@ export default ({ products, save, show, hide }) => {
       ...values,
       form: { ...values.form, [name]: value },
     });
+  };
+
+  const handleLotsChange = (event) => {
+    const lot = event.target.value;
+    const product = getProductById(values.form.product);
+    setValues({
+      ...values,
+      form: { ...values.form, quantity_lots: lot },
+    });
+    if (product)
+      setValues({
+        ...values,
+        form: { ...values.form, quantity_units: lot * product.lot },
+      });
   };
 
   return (
@@ -108,11 +122,23 @@ export default ({ products, save, show, hide }) => {
               />
             </Form.Group>
             <Form.Group md="4" as={Col} controlId="formGridEmail">
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label>Quantity Lots</Form.Label>
+              <Form.Control
+                onChange={handleLotsChange}
+                value={quantity_lots}
+                name="quantity_lots"
+                required
+                type="number"
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group md="4" as={Col} controlId="formGridEmail">
+              <Form.Label>Quantity Units</Form.Label>
               <Form.Control
                 onChange={handleChange}
-                value={quantity}
-                name="quantity"
+                value={quantity_units}
+                name="quantity_units"
                 required
                 type="number"
               />

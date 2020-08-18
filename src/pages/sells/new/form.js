@@ -12,6 +12,7 @@ export default ({
   showModal,
   deleteDetail,
   save,
+  update
 }) => {
   const [validated, setValidated] = useState(false);
 
@@ -22,7 +23,8 @@ export default ({
       event.stopPropagation();
       setValidated(true);
     } else {
-      save();
+      if(sell._id) update(sell._id);
+      else save();
     }
   };
 
@@ -47,7 +49,7 @@ export default ({
                 <Form.Label>Client</Form.Label>
                 <Form.Control
                   onChange={handleChange}
-                  value={client}
+                  value={client._id}
                   name="client"
                   required
                   as="select"
@@ -63,7 +65,7 @@ export default ({
                 </Form.Control>
               </Form.Group>
               <Form.Group md="4" as={Col} controlId="formGridEmail">
-                <Form.Label>Delivery Cost</Form.Label>
+                <Form.Label>Delivery Cost Bs</Form.Label>
                 <Form.Control
                   onChange={handleChange}
                   value={delivery_cost}
@@ -73,7 +75,7 @@ export default ({
                 />
               </Form.Group>
               <Form.Group md="4" as={Col} controlId="formGridPassword">
-                <Form.Label>Total Payment</Form.Label>
+                <Form.Label>Total Payment Bs</Form.Label>
                 <Form.Control
                   value={total_payment}
                   onChange={handleChange}
@@ -101,7 +103,7 @@ export default ({
               }}
             />
             <Alert variant="info" className="mt-3">
-              Total: {getTotal(sell.details)}
+              Total: {getTotal(sell.details)} Bs
             </Alert>
             <div className="mt-4">
               <Button variant="primary" type="submit">

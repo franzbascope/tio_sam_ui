@@ -6,28 +6,28 @@ export default ({
   handleChange,
   validated,
   handleSubmit,
-  shipmentStates,
+  storages,
   form,
   buys,
   addBuy,
 }) => {
   const getBuyOptions = () => {
     return buys.map((buy) => {
-      return { label: buy.name, value: JSON.stringify(buy) };
+      return { label: buy.name, value: buy._id };
     });
   };
 
-  const getShipmentStateOptions = () => {
-    return shipmentStates.map((state) => {
+  const getStorageStateOptions = () => {
+    return storages.map((storage) => {
       return (
-        <option key={state} value={state}>
-          {state}
+        <option key={storage._id} value={storage._id}>
+          {storage.name}
         </option>
       );
     });
   };
 
-  const { state, _id, arrival_date, departure_date, shipping_real_kg } = form;
+  const { _id, arrival_date, departure_date, shipping_real_kg } = form;
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -52,21 +52,6 @@ export default ({
           />
         </Form.Group>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
-          <Form.Label>Shipment State</Form.Label>
-          <Form.Control
-            onChange={handleChange}
-            value={state}
-            name="state"
-            required
-            as="select"
-          >
-            <option value="">Select a state</option>
-            {getShipmentStateOptions()}
-          </Form.Control>
-        </Form.Group>
-      </Form.Row>
-      <Form.Row>
-        <Form.Group md="4" as={Col} controlId="formGridEmail">
           <Form.Label>Net Weight Kg</Form.Label>
           <Form.Control
             onChange={handleChange}
@@ -76,6 +61,8 @@ export default ({
             type="number"
           />
         </Form.Group>
+      </Form.Row>
+      <Form.Row>
         <Form.Group md="4" as={Col} controlId="formGridEmail">
           <Form.Label>Buys</Form.Label>
           <MultiSelect
@@ -85,6 +72,19 @@ export default ({
               addBuy(event);
             }}
           />
+        </Form.Group>
+        <Form.Group md="4" as={Col} controlId="formGridEmail">
+          <Form.Label>Storage</Form.Label>
+          <Form.Control
+            onChange={handleChange}
+            value={form.storage._id}
+            name="storage"
+            required
+            as="select"
+          >
+            <option value="">Select a storage</option>
+            {getStorageStateOptions()}
+          </Form.Control>
         </Form.Group>
       </Form.Row>
       <Button variant="primary" type="submit">
