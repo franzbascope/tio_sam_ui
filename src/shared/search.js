@@ -1,36 +1,27 @@
-import React, { useState } from "react";
-import {
-  Form,
-  Col,
-  Button,
-  InputGroup,
-  Accordion,
-  Card,
-} from "react-bootstrap";
+import React from "react";
+import { Form, Col, Button, Accordion, Card } from "react-bootstrap";
 
 export default ({ fields, submit }) => {
-  const [filters, setFilter] = useState(fields);
-  const operators = ["<", ">", "="];
+  const operators = [">", "<", "="];
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFilter({ ...filters, [name]: value });
-  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    let query = "";
-    let sep = "";
-    for (let key in filters) {
-      let element = filters[key];
-      if (element.operator && element.value) {
-        query += `${sep}${key}=${element.operator}${element.value}`;
-        sep = "&";
-      } else if (element.value) {
-        query += `${sep}${key}==/${element.value}/`;
-        sep = "&";
-      }
-    }
-    submit(query);
+    const formData = new FormData(event.currentTarget);
+    let query = {};
+    formData.forEach(function (value, key) {
+      if (value != "") query[key] = value;
+    });
+    // for (let key in filters) {
+    //   let element = filters[key];
+    //   if (element.operator && element.value) {
+    //     query += `${sep}${key}=${element.operator}${element.value}`;
+    //     sep = "&";
+    //   } else if (element.value) {
+    //     query += `${sep}${key}==/${element.value}/`;
+    //     sep = "&";
+    //   }
+    // }
+    //submit(query);
   };
 
   return (
@@ -46,21 +37,17 @@ export default ({ fields, submit }) => {
             {" "}
             <Form onSubmit={handleSubmit}>
               <Form.Row className="align-items-center">
-                {fields.map((fieldObject) => {
+                {fields.map((fieldObject, index) => {
                   const { name, type, label } = fieldObject;
                   return (
                     <React.Fragment>
                       {type == "number" ? (
-                        <Col className="mt-3" md={2} key={name}>
+                        <Col className="mt-3" md={2} key={index}>
                           <Form.Label>Operator</Form.Label>
-                          <Form.Control
-                            as="select"
-                            onChange={handleChange}
-                            name={name}
-                          >
-                            {operators.map((operator) => {
+                          <Form.Control as="select" name={`operator:${name}`}>
+                            {operators.map((operator, opIndex) => {
                               return (
-                                <option key={operator} value={operator}>
+                                <option key={opIndex} value={operator}>
                                   {operator}
                                 </option>
                               );
@@ -70,14 +57,9 @@ export default ({ fields, submit }) => {
                       ) : (
                         ""
                       )}
-                      <Col className="mt-3" md={4} key={name}>
+                      <Col className="mt-3" md={5} key={name}>
                         <Form.Label>{label}</Form.Label>
-                        <Form.Control
-                          key={name}
-                          onChange={handleChange}
-                          name={name}
-                          type={type}
-                        />
+                        <Form.Control key={index} name={name} type={type} />
                       </Col>
                     </React.Fragment>
                   );

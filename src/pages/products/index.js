@@ -22,8 +22,15 @@ export default () => {
   const [globalValues, setGlobalValues] = useGlobal();
   const history = useHistory();
 
-  const fetchProducts = async (page, query="") => {
-    let res = await requestHandler(Methods.PAGE, productsUrl, null, page,"",query);
+  const fetchProducts = async (page, query = "") => {
+    let res = await requestHandler(
+      Methods.PAGE,
+      productsUrl,
+      null,
+      page,
+      "",
+      query
+    );
     if (res) setValues({ ...inputValues, products: res.data.response });
   };
 
@@ -58,7 +65,6 @@ export default () => {
     history.push(`/products/detail/${id}`);
   };
 
-
   return (
     <React.Fragment>
       <BreadCrumbs />
@@ -68,8 +74,7 @@ export default () => {
       <Search
         fields={filter}
         submit={(query) => {
-            setGlobalValues({...globalValues, currentPage: 1})
-            fetchProducts(globalValues.currentPage, query);
+          fetchProducts(null, query);
         }}
       />
       <Messages />
@@ -89,7 +94,7 @@ export default () => {
               deleteProduct(id);
             }}
           />
-          <Pagination fetchData={fetchProducts}/>
+          <Pagination fetchData={fetchProducts} />
         </React.Fragment>
       ) : (
         <Alert variant="warning">No products registered, Add one !!!</Alert>
